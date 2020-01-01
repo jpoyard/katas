@@ -8,7 +8,7 @@
     "build": "webpack --mode=production",
     "test": "npx mocha",
     "test:nyc": "npx nyc mocha",
-    "test:cc": "npx cucumber-js ./test/features -p default --format progress",
+    "test:cc": "npx cucumber-js test/bdd/features -p default --format progress",
     "stryker": "npx stryker run"
   },
   "keywords": [],
