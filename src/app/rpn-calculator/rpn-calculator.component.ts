@@ -1,8 +1,8 @@
-import {PRNCalculator} from "./prn-calculator";
-import {STYLE} from "./prn-calculator.component.style";
+import {RPNCalculator} from "./rpn-calculator";
+import {STYLE} from "./rpn-calculator.component.style";
 
 export class FizzBuzzElement extends HTMLElement {
-    private calculator: PRNCalculator = new PRNCalculator();
+    private calculator: RPNCalculator = new RPNCalculator();
     private shadow: ShadowRoot;
 
     constructor() {

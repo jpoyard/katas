@@ -1,13 +1,13 @@
 // http://codingdojo.org/kata/RPN/
 
 import {expect} from 'chai';
-import {PRNCalculator} from "../src/app/prn-calculator/prn-calculator";
+import {RPNCalculator} from "../../src/app/rpn-calculator/rpn-calculator";
 
-describe('PRN Calculator', () => {
-    let calculator: PRNCalculator;
+describe('RPN Calculator', () => {
+    let calculator: RPNCalculator;
 
     beforeEach(() => {
-        calculator = new PRNCalculator();
+        calculator = new RPNCalculator();
     })
 
     describe('calculate()', () => {

@@ -2,4 +2,4 @@
 --require source-map-support/register
 --recursive
 --extension ts
-./test/**/*.test.ts
+./test/tdd/**/*.test.ts

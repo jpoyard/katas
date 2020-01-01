@@ -2,7 +2,7 @@ import {BinaryOperationManager} from './binary-operation';
 import {UnaryOperation, UnaryOperationManager} from "./unary-operation";
 import {ArrayOperationManager} from "./array-operation";
 
-export class PRNCalculator {
+export class RPNCalculator {
     private unaryOperationManager: UnaryOperationManager;
     private binaryOperationManager: BinaryOperationManager;
     private arrayOperationManager: ArrayOperationManager;
