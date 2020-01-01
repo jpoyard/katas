@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@stryker-mutator/core": "^2.4.0",
     "@stryker-mutator/html-reporter": "^2.4.0",
     "@stryker-mutator/mocha-runner": "^2.4.0",
@@ -49,6 +49,14 @@
       ".ts",
       ".tsx"
     ],
+    "include": [
+      "src/app/**/*.ts"
+    ],
+    "exclude": [
+      "**/*.test.ts",
+      "./reports/**",
+      "./dist/**"
+    ],
     "require": [
       "ts-node/register"
     ],
@@ -57,7 +65,8 @@
       "html",
       "lcov"
     ],
-    "all": true,
+    "report-dir": "./reports/coverage",
+    "all": false,
     "sourceMap": true,
     "instrument": true
   }
