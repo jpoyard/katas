@@ -162,11 +162,11 @@
     <list>
       <item itemvalue="Cucumber.js.Cucumber" />
       <item itemvalue="Mocha.mocha" />
+      <item itemvalue="Mocha.test\prn-calculator.test.ts" />
       <item itemvalue="npm.stryker" />
       <item itemvalue="npm.start" />
       <item itemvalue="npm.test" />
       <item itemvalue="npm.coverage" />
-      <item itemvalue="Mocha.test\prn-calculator.test.ts" />
     </list>
     <recent_temporary>
       <list>
