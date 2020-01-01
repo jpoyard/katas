@@ -14,7 +14,7 @@ module.exports = function (config) {
         tsconfigFile: "tsconfig.json",
         files: [
             "./src/app/**/*.ts",
-            "./test/**/*.ts"
+            "./test/tdd/**/*.ts"
         ],
         webpack: {
             configFile: 'webpack.config.js',

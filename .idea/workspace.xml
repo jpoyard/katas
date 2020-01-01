@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="847ee973-2ee5-4b36-ad64-88ad4e7611b9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stryker.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/stryker.conf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/fizz-buzz/fizz-buzz.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/mocha.opts" beforeDir="false" afterPath="$PROJECT_DIR$/test/mocha.opts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +65,7 @@
       <recent name="D:\utilisateurs\jpoyard\workspace\fizzBuzz\src\app" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.stryker">
+  <component name="RunManager" selected="npm.coverage">
     <configuration name="Cucumber" type="cucumber.js" factoryName="Cucumber.js">
       <option name="myFilePath" value="$PROJECT_DIR$/test/features" />
       <option name="myNameFilter" value="" />
@@ -186,6 +186,8 @@
       <workItem from="1577888943100" duration="9080000" />
       <workItem from="1577898164636" duration="2492000" />
       <workItem from="1577900677945" duration="1818000" />
+      <workItem from="1577902848356" duration="53000" />
+      <workItem from="1577902938269" duration="164000" />
     </task>
     <servers />
   </component>
@@ -209,10 +211,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="457" y="142" key="#Test/0.0.1536.824@0.0.1536.824" timestamp="1577550604134" />
-    <state x="281" y="57" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577902502686">
+    <state x="281" y="57" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577902975265">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="281" y="57" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1577902502686" />
+    <state x="281" y="57" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1577902975265" />
     <state x="538" y="224" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1577699119438">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -237,22 +239,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1577901205690" />
-    <state width="1493" height="241" key="GridCell.Tab.0.bottom" timestamp="1577902516984">
+    <state width="1493" height="241" key="GridCell.Tab.0.bottom" timestamp="1577903212096">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="241" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1577902516984" />
-    <state width="1493" height="241" key="GridCell.Tab.0.center" timestamp="1577902516984">
+    <state width="1493" height="241" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1577903212096" />
+    <state width="1493" height="241" key="GridCell.Tab.0.center" timestamp="1577903212096">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="241" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1577902516984" />
-    <state width="1493" height="241" key="GridCell.Tab.0.left" timestamp="1577902516984">
+    <state width="1493" height="241" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1577903212096" />
+    <state width="1493" height="241" key="GridCell.Tab.0.left" timestamp="1577903212096">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="241" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1577902516984" />
-    <state width="1493" height="241" key="GridCell.Tab.0.right" timestamp="1577902516984">
+    <state width="1493" height="241" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1577903212096" />
+    <state width="1493" height="241" key="GridCell.Tab.0.right" timestamp="1577903212096">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="241" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1577902516984" />
+    <state width="1493" height="241" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1577903212096" />
     <state width="1493" height="262" key="GridCell.Tab.1.bottom" timestamp="1577900902413">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -305,10 +307,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="281" y="59" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1577888967431" />
-    <state x="479" y="242" key="com.intellij.ide.util.TipDialog" timestamp="1577900679030">
+    <state x="479" y="242" key="com.intellij.ide.util.TipDialog" timestamp="1577902954599">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="479" y="242" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1577900679030" />
+    <state x="479" y="242" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1577902954599" />
     <state x="94" y="94" width="1349" height="637" key="dock-window-1" timestamp="1577875232712">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -331,7 +333,7 @@
     <SUITE FILE_PATH="coverage/fizzBuzz$test.dat" NAME="test Coverage Results" MODIFIED="1577873190684" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/fizzBuzz$src_app.dat" NAME="src\app Coverage Results" MODIFIED="1577699585732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/katas$test.dat" NAME="test Coverage Results" MODIFIED="1577881739871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/katas$mocha.dat" NAME="mocha Coverage Results" MODIFIED="1577900864015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/katas$mocha.dat" NAME="mocha Coverage Results" MODIFIED="1577903141584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/fizzBuzz$MochaTests.dat" NAME="MochaTests Coverage Results" MODIFIED="1577550863076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
