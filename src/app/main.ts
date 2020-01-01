@@ -1,9 +1,10 @@
 import {FizzBuzzElement} from './fizz-buzz/fizz-buzz.component';
+import {PRNCalculator} from "./prn-calculator/prn-calculator";
 import './style.css';
 
 const PACKAGE = require('./../../package.json');
 
-const ELEMENTS = [FizzBuzzElement];
+const ELEMENTS = [FizzBuzzElement, PRNCalculator];
 
 function getName(constructor: Function) {
     return constructor.name
