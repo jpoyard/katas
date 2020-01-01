@@ -1,0 +1,64 @@
+{
+  "name": "katas",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "start": "webpack-dev-server --open",
+    "build": "webpack --mode=production",
+    "test": "npx mocha",
+    "test:nyc": "npx nyc mocha",
+    "test:cc": "npx cucumber-js ./test/features -p default --format progress",
+    "stryker": "npx stryker run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.0",
+    "@stryker-mutator/core": "^2.4.0",
+    "@stryker-mutator/html-reporter": "^2.4.0",
+    "@stryker-mutator/mocha-runner": "^2.4.0",
+    "@stryker-mutator/typescript": "^2.4.0",
+    "@stryker-mutator/webpack-transpiler": "^2.4.0",
+    "@types/chai": "^4.2.7",
+    "@types/cucumber": "^6.0.0",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "css-loader": "^3.4.0",
+    "cucumber": "^5.1.0",
+    "cucumber-tsflow": "^3.2.0",
+    "extract-loader": "^3.1.0",
+    "file-loader": "^5.0.2",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mocha": "^6.2.2",
+    "nyc": "^15.0.0",
+    "source-map-support": "^0.5.16",
+    "style-loader": "^1.1.2",
+    "ts-loader": "^6.2.1",
+    "ts-mocha": "^6.0.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html",
+      "lcov"
+    ],
+    "all": true,
+    "sourceMap": true,
+    "instrument": true
+  }
+}
