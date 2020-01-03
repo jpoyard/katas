@@ -1,5 +1,5 @@
 import {STYLE} from "./volume-credits.component.style";
-import {statement} from "./service/statement";
+import {htmlStatement, statement} from "./service/statement";
 
 export class VolumeCreditsElement extends HTMLElement {
     private shadow: ShadowRoot;
@@ -12,7 +12,7 @@ export class VolumeCreditsElement extends HTMLElement {
     private init() {
         this.shadow = this.attachShadow({mode: 'open'});
 
-        const wrapper = this.getContent();
+        const wrapper = VolumeCreditsElement.getContent();
 
         const style = document.createElement('style');
 
@@ -22,15 +22,28 @@ export class VolumeCreditsElement extends HTMLElement {
         this.shadow.appendChild(wrapper);
     }
 
-    private getContent(): HTMLElement {
-        const container = document.createElement('pre');
+    private static getContent(): HTMLElement {
+        const container = document.createElement('div');
+        container.classList.add('container');
 
         const invoice = require('./samples/invoices.json')[0];
         const plays = require('./samples/plays.json');
-        const result = statement(invoice, plays);
 
-        container.textContent = result
+        container.appendChild(VolumeCreditsElement.renderPlainText(invoice, plays));
+        container.appendChild(VolumeCreditsElement.renderHtml(invoice, plays));
 
         return container;
+    }
+
+    private static renderPlainText(invoice, plays) {
+        const preElement = document.createElement('pre');
+        preElement.textContent = statement(invoice, plays);
+        return preElement;
+    }
+
+    private static renderHtml(invoice, plays) {
+        const preElement = document.createElement('div');
+        preElement.innerHTML = htmlStatement(invoice, plays);
+        return preElement;
     }
 }
