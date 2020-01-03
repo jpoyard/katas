@@ -19,37 +19,13 @@ export class GildedRose {
 
     private static updateItemQuality(item: Item) {
         if (item.name === 'Aged Brie') {
-            item.sellIn = item.sellIn - 1;
-            if (item.quality < 50) {
-                item.quality = item.quality + 1;
-            }
-            if ((item.sellIn < 0) && (item.quality < 50)) {
-                item.quality = item.quality + 1
-            }
+            item = new AgedBrieItemUpdate(item).update();
         } else if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
-            item.sellIn = item.sellIn - 1;
-            if (item.quality < 50) {
-                item.quality = item.quality + 1;
-                if ((item.sellIn < 10) && (item.quality < 50)) {
-                    item.quality = item.quality + 1
-                }
-                if ((item.sellIn < 5) && (item.quality < 50)) {
-                    item.quality = item.quality + 1
-                }
-            }
-            if (item.sellIn < 0) {
-                item.quality = 0
-            }
+            item = new BackstagePassesItemUpdate(item).update();
         } else if (item.name === 'Sulfuras, Hand of Ragnaros') {
             // NO ACTION
         } else {
-            item.sellIn = item.sellIn - 1;
-            if (item.quality > 0) {
-                item.quality = item.quality - 1
-            }
-            if ((item.sellIn < 0) && (item.quality > 0)) {
-                item.quality = item.quality - 1
-            }
+            item = new ItemUpdater(item).update();
         }
         return item;
     }
@@ -62,5 +38,65 @@ export class GildedRose {
         }
 
         return this.items;
+    }
+}
+
+class ItemUpdater {
+    constructor(public item: Item) {
+    }
+
+    update(): Item {
+        this.updateSellIn();
+        this.updateQuality();
+        return this.item;
+    }
+
+    protected updateSellIn() {
+        this.item.sellIn = this.item.sellIn - 1;
+    }
+
+    protected updateQuality() {
+        if (this.item.quality > 0) {
+            this.item.quality = this.item.quality - 1
+        }
+        if ((this.item.sellIn < 0) && (this.item.quality > 0)) {
+            this.item.quality = this.item.quality - 1
+        }
+    }
+}
+
+class AgedBrieItemUpdate extends ItemUpdater {
+    constructor(public item: Item) {
+        super(item);
+    }
+
+    protected updateQuality() {
+        if (this.item.quality < 50) {
+            this.item.quality = this.item.quality + 1;
+        }
+        if ((this.item.sellIn < 0) && (this.item.quality < 50)) {
+            this.item.quality = this.item.quality + 1
+        }
+    }
+}
+
+class BackstagePassesItemUpdate extends ItemUpdater {
+    constructor(public item: Item) {
+        super(item);
+    }
+
+    protected updateQuality() {
+        if (this.item.quality < 50) {
+            this.item.quality = this.item.quality + 1;
+            if ((this.item.sellIn < 10) && (this.item.quality < 50)) {
+                this.item.quality = this.item.quality + 1
+            }
+            if ((this.item.sellIn < 5) && (this.item.quality < 50)) {
+                this.item.quality = this.item.quality + 1
+            }
+        }
+        if (this.item.sellIn < 0) {
+            this.item.quality = 0
+        }
     }
 }
