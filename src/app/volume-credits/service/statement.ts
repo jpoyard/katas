@@ -1,29 +1,43 @@
 export function statement(invoice, plays) {
-    let totalAmount = 0;
-    let volumeCredits = 0;
     let result = `Statement for ${invoice.customer}\n`;
-    const format = new Intl.NumberFormat("en-US",
-        {
-            style: "currency", currency: "USD",
-            minimumFractionDigits: 2
-        }).format;
-
     for (let perf of invoice.performances) {
-        volumeCredits += volumeCreditsFor(perf);
-
         // print line for this order
-        result += `  ${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${perf.audience} seats)\n`;
-        totalAmount += amountFor(perf);
+        result += `  ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats)\n`;
     }
-    result += `Amount owed is ${format(totalAmount / 100)}\n`;
-    result += `You earned ${volumeCredits} credits\n`;
+
+    result += `Amount owed is ${usd(totalAmount())}\n`;
+    result += `You earned ${totalVolumeCredits()} credits\n`;
     return result;
 
-    function volumeCreditsFor(perf: { playID: string; audience: number }): number {
-        let volumeCredits =0;
-        volumeCredits += Math.max(perf.audience - 30, 0);
-        if ("comedy" === playFor(perf).type) volumeCredits += Math.floor(perf.audience / 5);
+    function totalAmount() {
+        let totalAmount = 0;
+        for (let perf of invoice.performances) {
+            totalAmount += amountFor(perf);
+        }
+        return totalAmount;
+    }
+
+    function totalVolumeCredits() {
+        let volumeCredits = 0;
+        for (let perf of invoice.performances) {
+            volumeCredits += volumeCreditsFor(perf);
+        }
         return volumeCredits;
+    }
+
+    function usd(amount: number): string {
+        return new Intl.NumberFormat("en-US",
+            {
+                style: "currency", currency: "USD",
+                minimumFractionDigits: 2
+            }).format(amount / 100);
+    }
+
+    function volumeCreditsFor(aPerformance: { playID: string; audience: number }): number {
+        let result = 0;
+        result += Math.max(aPerformance.audience - 30, 0);
+        if ("comedy" === playFor(aPerformance).type) result += Math.floor(aPerformance.audience / 5);
+        return result;
     }
 
     function playFor(perf: { playID: string }) {
