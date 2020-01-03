@@ -1,4 +1,4 @@
-import {FizzBuzz} from "./fizz-buzz";
+import {FizzBuzz} from "./service/fizz-buzz";
 import {STYLE} from "./fizz-buzz.component.style";
 
 export class FizzBuzzElement extends HTMLElement {
