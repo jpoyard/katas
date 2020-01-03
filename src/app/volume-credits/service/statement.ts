@@ -15,6 +15,40 @@ function renderPlainText(data: { customer: string, performances, totalAmount: nu
     return result;
 }
 
+export function htmlStatement(invoice, plays) {
+    return renderHtml(createStatementData(invoice, plays));
+}
+
+function renderHtml(data: { customer: string, performances, totalAmount: number, totalVolumeCredits: number }) {
+    let result = `
+<h1>Statement for ${data.customer}</h1>
+<table>
+    <thead>
+        <tr>
+            <th>play</th><th>seats</th><th>cost</th>
+        </tr>
+    </thead>
+    <tbody>`;
+
+    for (let perf of data.performances) {
+        // print line for this order
+        result += `
+        <tr>
+            <td>${perf.play.name}</td>
+            <td>${perf.audience}</td>
+            <td>${usd(perf.amount)}</td>
+        </tr>`;
+    }
+
+    result += `    </tbody>
+</table>
+<p>Amount owed is <em>${usd(data.totalAmount)}</em></p>
+<p>You earned <em>${data.totalVolumeCredits}</em> credits</p>
+`;
+
+    return result;
+}
+
 function usd(amount: number): string {
     return new Intl.NumberFormat("en-US",
         {
