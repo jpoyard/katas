@@ -1,6 +1,6 @@
 import {binding, then, when} from 'cucumber-tsflow';
 import {expect} from 'chai';
-import {FizzBuzz} from "../../../src/app/fizz-buzz/fizz-buzz";
+import {FizzBuzz} from "../../../src/app/fizz-buzz/service/fizz-buzz";
 
 @binding()
 export class FizzBuzz1Steps {

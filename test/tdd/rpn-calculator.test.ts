@@ -1,7 +1,7 @@
 // http://codingdojo.org/kata/RPN/
 
 import {expect} from 'chai';
-import {RPNCalculator} from "../../src/app/rpn-calculator/rpn-calculator";
+import {RPNCalculator} from "../../src/app/rpn-calculator/service/rpn-calculator";
 
 describe('RPN Calculator', () => {
     let calculator: RPNCalculator;
