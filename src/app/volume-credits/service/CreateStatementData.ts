@@ -1,52 +1,78 @@
-export function createStatementData(invoice, plays) {
-    const statementData: any = {};
-    statementData.customer = invoice.customer;
-    statementData.performances = invoice.performances.map(enrichPerformance);
-    statementData.totalAmount = totalAmount(statementData);
-    statementData.totalVolumeCredits = totalVolumeCredits(statementData);
-    return statementData;
+interface Play {
+    "name": string,
+    "type": string
+}
 
-    function enrichPerformance(aPerformance) {
-        const result = {...aPerformance};
-        result.play = playFor(result);
-        result.amount = amountFor(result);
-        result.volumeCredits = volumeCreditsFor(result);
-        return result;
+interface Performance {
+    "playID": string,
+    "audience": number
+}
+
+interface EnrichPerformance extends Performance {
+    play: Play;
+    amount: number;
+    volumeCredits: number;
+}
+
+class PerformanceCalculator {
+    constructor(public performance: Performance, public play: Play) {
     }
 
-    function playFor(aPerformance: { playID: string }) {
-        return plays[aPerformance.playID];
-    }
-
-    function amountFor(aPerformance) {
+    public get amount(): number {
         let result = 0;
 
-        switch ((aPerformance.play).type) {
+        switch ((this.play).type) {
             case "tragedy":
                 result = 40000;
-                if (aPerformance.audience > 30) {
-                    result += 1000 * (aPerformance.audience - 30);
+                if (this.performance.audience > 30) {
+                    result += 1000 * (this.performance.audience - 30);
                 }
                 break;
             case "comedy":
                 result = 30000;
-                if (aPerformance.audience > 20) {
-                    result += 10000 + 500 * (aPerformance.audience - 20);
+                if (this.performance.audience > 20) {
+                    result += 10000 + 500 * (this.performance.audience - 20);
                 }
-                result += 300 * aPerformance.audience;
+                result += 300 * this.performance.audience;
                 break;
             default:
-                throw new Error(`unknown type: ${aPerformance.play.type}`);
+                throw new Error(`unknown type: ${this.play.type}`);
         }
 
         return result
     }
 
-    function volumeCreditsFor(aPerformance: { playID: string; audience: number, play: { type: string } }): number {
+    public get volumeCredits(): number {
         let result = 0;
-        result += Math.max(aPerformance.audience - 30, 0);
-        if ("comedy" === aPerformance.play.type) result += Math.floor(aPerformance.audience / 5);
+        result += Math.max(this.performance.audience - 30, 0);
+        if ("comedy" === this.play.type) result += Math.floor(this.performance.audience / 5);
         return result;
+    }
+}
+
+function createPerformanceCalculator(aPerformance, playFor: (aPerformance: { playID: string }) => any) {
+    return new PerformanceCalculator(aPerformance, playFor(aPerformance));
+}
+
+export function createStatementData(invoice, plays) {
+    const result: any = {};
+    result.customer = invoice.customer;
+    result.performances = invoice.performances.map(enrichPerformance);
+    result.totalAmount = totalAmount(result);
+    result.totalVolumeCredits = totalVolumeCredits(result);
+    return result;
+
+    function enrichPerformance(aPerformance): EnrichPerformance {
+        const calculator = createPerformanceCalculator(aPerformance, playFor);
+        const result = {...aPerformance};
+        result.play = calculator.play;
+        result.amount = calculator.amount;
+        result.volumeCredits = calculator.volumeCredits;
+        return result;
+    }
+
+    function playFor(aPerformance: { playID: string }) {
+        return plays[aPerformance.playID];
     }
 
     function totalAmount(data: { performances; }) {
