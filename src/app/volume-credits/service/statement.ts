@@ -1,10 +1,11 @@
-import {createStatementData} from "./CreateStatementData";
+import {createStatementData, Statement} from "./CreateStatementData";
+import {Invoice, Plays} from "./model.interface";
 
-export function statement(invoice, plays) {
+export function statement(invoice: Invoice, plays: Plays): string {
     return renderPlainText(createStatementData(invoice, plays));
 }
 
-function renderPlainText(data: { customer: string, performances, totalAmount: number, totalVolumeCredits: number }) {
+function renderPlainText(data: Statement): string {
     let result = `Statement for ${data.customer}\n`;
     for (let perf of data.performances) {
         // print line for this order
@@ -15,11 +16,11 @@ function renderPlainText(data: { customer: string, performances, totalAmount: nu
     return result;
 }
 
-export function htmlStatement(invoice, plays) {
+export function htmlStatement(invoice, plays): string {
     return renderHtml(createStatementData(invoice, plays));
 }
 
-function renderHtml(data: { customer: string, performances, totalAmount: number, totalVolumeCredits: number }) {
+function renderHtml(data: Statement): string {
     let result = `
 <h1>Statement for ${data.customer}</h1>
 <table>

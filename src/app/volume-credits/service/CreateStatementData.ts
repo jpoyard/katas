@@ -1,12 +1,4 @@
-interface Play {
-    "name": string,
-    "type": string
-}
-
-interface Performance {
-    "playID": string,
-    "audience": number
-}
+import {Invoice, Performance, Play, Plays} from "./model.interface";
 
 interface EnrichPerformance extends Performance {
     play: Play;
@@ -21,7 +13,7 @@ interface PerformanceCalculator {
     volumeCredits: number;
 }
 
-interface Statement {
+export interface Statement {
     customer: string;
     performances: EnrichPerformance[];
     totalAmount: number;
@@ -74,7 +66,7 @@ class ComedyCalculator extends PerformanceCalculatorImpl implements PerformanceC
     }
 }
 
-function createPerformanceCalculator(aPerformance, aPlay): PerformanceCalculator {
+function createPerformanceCalculator(aPerformance: Performance, aPlay: Play): PerformanceCalculator {
     const PERFORMANCE_CALCULATORS: Array<{ type: string, constructor }> = [
         {type: "tragedy", constructor: TragedyCalculator},
         {type: "comedy", constructor: ComedyCalculator},
@@ -89,32 +81,34 @@ function createPerformanceCalculator(aPerformance, aPlay): PerformanceCalculator
     return new result.constructor(aPerformance, aPlay);
 }
 
-export function createStatementData(invoice, plays): Statement {
-    const result: any = {};
-    result.customer = invoice.customer;
-    result.performances = invoice.performances.map(enrichPerformance);
-    result.totalAmount = totalAmount(result);
-    result.totalVolumeCredits = totalVolumeCredits(result);
-    return result;
+export function createStatementData(invoice: Invoice, plays: Plays): Statement {
+    const performances = invoice.performances.map(enrichPerformance);
+    return {
+        customer: invoice.customer,
+        performances,
+        totalAmount: totalAmount(performances),
+        totalVolumeCredits: totalVolumeCredits(performances)
+    };
 
-    function enrichPerformance(aPerformance): EnrichPerformance {
+    function enrichPerformance(aPerformance: Performance): EnrichPerformance {
         const calculator = createPerformanceCalculator(aPerformance, playFor(aPerformance));
-        const result = {...aPerformance};
-        result.play = calculator.play;
-        result.amount = calculator.amount;
-        result.volumeCredits = calculator.volumeCredits;
-        return result;
+        return {
+            ...aPerformance,
+            play: calculator.play,
+            amount: calculator.amount,
+            volumeCredits: calculator.volumeCredits
+        };
     }
 
     function playFor(aPerformance: { playID: string }) {
         return plays[aPerformance.playID];
     }
 
-    function totalAmount(data: { performances; }) {
-        return data.performances.reduce((total, p) => total + p.amount, 0);
+    function totalAmount(performances: EnrichPerformance[]) {
+        return performances.reduce((total, p) => total + p.amount, 0);
     }
 
-    function totalVolumeCredits(data: { performances; }) {
-        return data.performances.reduce((total, p) => total + p.volumeCredits, 0);
+    function totalVolumeCredits(performances: EnrichPerformance[]) {
+        return performances.reduce((total, p) => total + p.volumeCredits, 0);
     }
 }
