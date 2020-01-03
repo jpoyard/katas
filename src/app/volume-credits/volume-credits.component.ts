@@ -1,4 +1,5 @@
 import {STYLE} from "./volume-credits.component.style";
+import {statement} from "./service/statement";
 
 export class VolumeCreditsElement extends HTMLElement {
     private shadow: ShadowRoot;
@@ -22,8 +23,13 @@ export class VolumeCreditsElement extends HTMLElement {
     }
 
     private getContent(): HTMLElement {
-        const container = document.createElement('div');
-        container.classList.add('container');
+        const container = document.createElement('pre');
+
+        const invoice = require('./samples/invoices.json')[0];
+        const plays = require('./samples/plays.json');
+        const result = statement(invoice, plays);
+
+        container.textContent = result
 
         return container;
     }
