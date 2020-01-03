@@ -2,6 +2,7 @@ export function statement(invoice, plays) {
     const statementData: any = {};
     statementData.customer = invoice.customer;
     statementData.performances = invoice.performances.map(enrichPerformance);
+    statementData.totalAmount = totalAmount(statementData);
     return renderPlainText(statementData);
 
     function enrichPerformance(aPerformance) {
@@ -46,25 +47,25 @@ export function statement(invoice, plays) {
         if ("comedy" === aPerformance.play.type) result += Math.floor(aPerformance.audience / 5);
         return result;
     }
-}
 
-function renderPlainText(data: { customer: string, performances }) {
-    let result = `Statement for ${data.customer}\n`;
-    for (let perf of data.performances) {
-        // print line for this order
-        result += `  ${perf.play.name}: ${usd(perf.amount)} (${perf.audience} seats)\n`;
-    }
-    result += `Amount owed is ${usd(totalAmount())}\n`;
-    result += `You earned ${totalVolumeCredits()} credits\n`;
-    return result;
-
-    function totalAmount() {
+    function totalAmount(data: { performances; }) {
         let result = 0;
         for (let perf of data.performances) {
             result += perf.amount;
         }
         return result;
     }
+}
+
+function renderPlainText(data: { customer: string, performances, totalAmount: number }) {
+    let result = `Statement for ${data.customer}\n`;
+    for (let perf of data.performances) {
+        // print line for this order
+        result += `  ${perf.play.name}: ${usd(perf.amount)} (${perf.audience} seats)\n`;
+    }
+    result += `Amount owed is ${usd(data.totalAmount)}\n`;
+    result += `You earned ${totalVolumeCredits()} credits\n`;
+    return result;
 
     function totalVolumeCredits() {
         let result = 0;
