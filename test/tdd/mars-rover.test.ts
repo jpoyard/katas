@@ -30,66 +30,79 @@ describe(MarsRover.name, () => {
                 {
                     given: {position: {x: 0, y: 0}, direction: 'N'},
                     when: {commands: 'f'},
-                    then: {position: {x: 0, y: 1}}
+                    then: [{position: {x: 0, y: 1}, direction: 'N'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'N'},
                     when: {commands: 'b'},
-                    then: {position: {x: 0, y: -1}}
+                    then: [{position: {x: 0, y: -1}, direction: 'N'}]
                 },
                 {
                     given: {position: {x: 1, y: 1}, direction: 'N'},
                     when: {commands: 'f'},
-                    then: {position: {x: 1, y: 2}}
+                    then: [{position: {x: 1, y: 2}, direction: 'N'}]
                 },
                 {
                     given: {position: {x: -1, y: -1}, direction: 'N'},
                     when: {commands: 'b'},
-                    then: {position: {x: -1, y: -2}}
+                    then: [{position: {x: -1, y: -2}, direction: 'N'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'W'},
                     when: {commands: 'f'},
-                    then: {position: {x: -1, y: 0}}
+                    then: [{position: {x: -1, y: 0}, direction: 'W'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'W'},
                     when: {commands: 'b'},
-                    then: {position: {x: 1, y: 0}}
+                    then: [{position: {x: 1, y: 0}, direction: 'W'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'S'},
                     when: {commands: 'f'},
-                    then: {position: {x: 0, y: -1}}
+                    then: [{position: {x: 0, y: -1}, direction: 'S'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'S'},
                     when: {commands: 'b'},
-                    then: {position: {x: 0, y: 1}}
+                    then: [{position: {x: 0, y: 1}, direction: 'S'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'E'},
                     when: {commands: 'f'},
-                    then: {position: {x: 1, y: 0}}
+                    then: [{position: {x: 1, y: 0}, direction: 'E'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'E'},
                     when: {commands: 'b'},
-                    then: {position: {x: -1, y: 0}}
+                    then: [{position: {x: -1, y: 0}, direction: 'E'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'N'},
                     when: {commands: 'ff'},
-                    then: {position: {x: 0, y: 2}}
+                    then: [
+                        {position: {x: 0, y: 1}, direction: 'N'},
+                        {position: {x: 0, y: 2}, direction: 'N'}
+                    ]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'E'},
                     when: {commands: 'bbfbb'},
-                    then: {position: {x: -3, y: 0}}
+                    then: [
+                        {position: {x: -1, y: 0}, direction: 'E'},
+                        {position: {x: -2, y: 0}, direction: 'E'},
+                        {position: {x: -1, y: 0}, direction: 'E'},
+                        {position: {x: -2, y: 0}, direction: 'E'},
+                        {position: {x: -3, y: 0}, direction: 'E'},
+                    ]
                 },
-            ].forEach((scenario: { given: { position: Position, direction: Direction }, when: { commands: string }, then: { position: Position } }) => {
+            ].forEach((scenario: {
+                given: { position: Position, direction: Direction },
+                when: { commands: string },
+                then: Array<{ position: Position, direction: Direction }>
+            }) => {
                 it(`
-should return ${JSON.stringify(scenario.then.position)}, 
+should return ${JSON.stringify(scenario.then)}, 
 when given params are ${JSON.stringify(scenario.given)} 
 and call do method with '${scenario.when.commands}' commands`, () => {
                     // Given
@@ -99,8 +112,8 @@ and call do method with '${scenario.when.commands}' commands`, () => {
                     const actual = marsRover.do(scenario.when.commands);
 
                     // Then
-                    expect(actual).eql(scenario.then.position);
-                    expect(marsRover.position).eql(scenario.then.position);
+                    expect(actual).eql(scenario.then);
+                    expect(marsRover.position).eql(scenario.then.reverse()[0].position);
                     expect(marsRover.direction).eq(scenario.given.direction);
                 })
             })

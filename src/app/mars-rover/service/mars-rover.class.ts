@@ -5,6 +5,11 @@ export interface Position {
 
 export type Direction = 'N' | 'W' | 'S' | 'E';
 
+export interface State {
+    position: Position,
+    direction: Direction
+}
+
 export class MarsRover {
     constructor(private _position: Position, private _direction: Direction) {
     }
@@ -17,11 +22,16 @@ export class MarsRover {
         return this._direction;
     }
 
-    do(commands: string): Position {
-        commands.split('').forEach((command) => {
+    public get state(): State {
+        return {position: {...this.position}, direction: this.direction};
+    }
+
+    do(commands: string): State[] {
+        const result: State[] = commands.split('').map((command) => {
             this.doCommand(command);
-        })
-        return this._position;
+            return this.state;
+        });
+        return result;
     }
 
     private doCommand(command: string) {
