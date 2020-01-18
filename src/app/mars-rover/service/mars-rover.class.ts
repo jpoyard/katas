@@ -11,7 +11,11 @@ export interface State {
 }
 
 export class MarsRover {
-    constructor(private _position: Position, private _direction: Direction, private _gridSize: number = 10) {
+    constructor(
+        private _position: Position,
+        private _direction: Direction,
+        private _gridSize: number = 10
+    ) {
     }
 
     public get gridSize(): number {
@@ -31,10 +35,11 @@ export class MarsRover {
     }
 
     public do(commands: string): State[] {
-        return commands.split('').map((command) => {
-            this.doCommand(command);
-            return this.state;
-        });
+        return commands.split('').map(
+            (command) => {
+                this.doCommand(command);
+                return this.state;
+            });
     }
 
     private doCommand(command: string) {
@@ -125,5 +130,4 @@ export class MarsRover {
             return value - 1;
         }
     }
-
 }

@@ -1,24 +1,11 @@
 import {RoverDesigner} from "./rover-designer.component";
-import {Direction, State} from "../service/mars-rover.class";
-
-interface OrientationInfo {
-    orientation: Direction;
-    angle: number;
-    L: Direction;
-    R: Direction;
-}
+import {State} from "../service/mars-rover.class";
 
 export class GridDesigner {
     private readonly PRIMARY_COLOR = "#33ffbb";
     private readonly SECONDARY_COLOR = "#ed2939";
     private readonly numberofcolumns: number = 11;
     private readonly numberofrows: number = 11;
-    private readonly ORIENTATIONS: OrientationInfo[] = [
-        {orientation: 'E', angle: 1, L: 'N', R: 'S'},
-        {orientation: 'N', angle: 1 / 2, L: 'W', R: 'E'},
-        {orientation: 'W', angle: 0, L: 'S', R: 'N'},
-        {orientation: 'S', angle: 3 / 2, L: 'E', R: 'W'}
-    ];
 
     private canvas: HTMLCanvasElement;
     private canvasCtx: CanvasRenderingContext2D;
@@ -27,6 +14,7 @@ export class GridDesigner {
     private height: number;
     private cellSize: number;
     private roverDesigner: RoverDesigner;
+    private states: State[] = [];
 
     constructor(canvas: HTMLCanvasElement, gridSize: number) {
         this.numberofcolumns = gridSize;
@@ -34,6 +22,9 @@ export class GridDesigner {
         this.canvas = canvas;
         this.canvasCtx = this.canvas.getContext('2d');
         this.roverDesigner = new RoverDesigner(this.PRIMARY_COLOR, this.SECONDARY_COLOR, this.canvasCtx);
+        setInterval(() => {
+            this.drawFrame();
+        }, 500);
     }
 
     set size(size: { width: number; height: number; }) {
@@ -45,23 +36,8 @@ export class GridDesigner {
         this.roverDesigner.size = this.cellSize / 3;
     }
 
-    public draw(state: State): void {
-        this.clear();
-        this.drawGrid();
-        this.drawRover(state);
-    }
-
-    public getDirection(orientation: string): number {
-        return this.getDirectionInfo(orientation).angle;
-    }
-
-    private getDirectionInfo(orientation: string): OrientationInfo {
-        const orientationInfo = this.ORIENTATIONS.find(o => o.orientation === orientation.toUpperCase());
-        if (!orientationInfo) {
-            throw new Error(`Unknown orientation ${orientation}`)
-        }
-        return orientationInfo;
-
+    public draw(states: State[]): void {
+        this.states = states;
     }
 
     private drawGrid() {
@@ -69,11 +45,30 @@ export class GridDesigner {
         this.drawHLines();
         this.writeXPosition();
         this.drawVLines();
-        this.canvasCtx.save();
     }
 
     private clear() {
         this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    private drawFrame() {
+        if (this.states.length > 0) {
+            const state = (this.states.pop());
+            this.drawState(state);
+            this.drawState(state);
+        }
+    }
+
+    private drawState(state: State) {
+        this.clear();
+        this.drawGrid();
+        this.canvasCtx.save();
+        this.roverDesigner.draw({
+            position: {
+                x: this.getXPosition(state.position.x),
+                y: this.getYPosition(state.position.y)
+            }, direction: state.direction
+        });
     }
 
     private drawHLines() {
@@ -123,15 +118,6 @@ export class GridDesigner {
             const ypos = this.height - (this.height - textSize.height) / 2;
             this.canvasCtx.fillText(displayedValue, xpos, ypos + this.height * (this.numberofcolumns - (y + 1)));
         }
-    }
-
-    private drawRover({position, direction}: State) {
-        this.roverDesigner.orientation = direction;
-        this.roverDesigner.drawRover({
-            x: this.getXPosition(position.x),
-            y: this.getYPosition(position.y),
-            direction: this.getDirection(direction)
-        });
     }
 
     private getYPosition(y: number) {

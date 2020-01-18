@@ -2,7 +2,7 @@
 
 import {STYLE} from "./mars-rover.component.style";
 import {GridDesigner} from "./components/grid-designer.component";
-import {MarsRover} from "./service/mars-rover.class";
+import {MarsRover, State} from "./service/mars-rover.class";
 
 export class MarsRoverElement extends HTMLElement {
     private shadow: ShadowRoot;
@@ -18,20 +18,25 @@ export class MarsRoverElement extends HTMLElement {
         this.gridSize = 10;
         this.init();
         this.gridDesigner = new GridDesigner(this.canvas, this.gridSize);
-        this.marsRover = new MarsRover({x:0, y:0}, 'N', this.gridSize);
-        window.addEventListener('resize', () => this.refresh());
-        this.refresh();
+        this.marsRover = new MarsRover({x: 0, y: 0}, 'N', this.gridSize);
+        window.addEventListener('resize', () => this.resize());
+        this.resize();
+        setTimeout(() => this.do(), 2000);
     }
 
-    refresh() {
+    public resize() {
         this.gridDesigner.size = {width: 0, height: 0};
         setTimeout(
             () => {
                 const gridSize = this.map.offsetWidth > this.map.offsetHeight ? this.map.offsetHeight : this.map.offsetWidth;
                 this.gridDesigner.size = {width: gridSize, height: gridSize};
-                this.gridDesigner.draw(this.marsRover.state);
-            }, 100
-        )
+            });
+    }
+
+    public do() {
+        const state = this.marsRover.state;
+        const states = [state, ...this.marsRover.do('ffrfflfffrffflbbbrffrfflfffl')].reverse();
+        this.gridDesigner.draw(states);
     }
 
     private init() {
