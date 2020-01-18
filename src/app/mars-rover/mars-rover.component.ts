@@ -2,16 +2,23 @@
 
 import {STYLE} from "./mars-rover.component.style";
 import {GridDesigner} from "./components/grid-designer.component";
+import {MarsRover} from "./service/mars-rover.class";
 
 export class MarsRoverElement extends HTMLElement {
     private shadow: ShadowRoot;
     private console: HTMLDivElement;
     private map: HTMLDivElement;
     private gridDesigner: GridDesigner;
+    private marsRover: MarsRover;
+    private canvas: HTMLCanvasElement;
+    private gridSize: number;
 
     constructor() {
         super();
+        this.gridSize = 10;
         this.init();
+        this.gridDesigner = new GridDesigner(this.canvas, this.gridSize);
+        this.marsRover = new MarsRover({x:0, y:0}, 'N', this.gridSize);
         window.addEventListener('resize', () => this.refresh());
         this.refresh();
     }
@@ -22,10 +29,7 @@ export class MarsRoverElement extends HTMLElement {
             () => {
                 const gridSize = this.map.offsetWidth > this.map.offsetHeight ? this.map.offsetHeight : this.map.offsetWidth;
                 this.gridDesigner.size = {width: gridSize, height: gridSize};
-                this.gridDesigner.draw(3, 3, 'N');
-                this.gridDesigner.rotateRover('L');
-                // this.gridDesigner.rotateRover('S');
-                // this.gridDesigner.rotateRover('E');
+                this.gridDesigner.draw(this.marsRover.state);
             }, 100
         )
     }
@@ -55,9 +59,8 @@ export class MarsRoverElement extends HTMLElement {
         this.map.classList.add('map');
         container.appendChild(this.map);
 
-        const canvas = document.createElement('canvas');
-        this.map.appendChild(canvas);
-        this.gridDesigner = new GridDesigner(canvas);
+        this.canvas = document.createElement('canvas');
+        this.map.appendChild(this.canvas);
 
         return container;
     }

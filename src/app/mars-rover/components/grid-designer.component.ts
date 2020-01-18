@@ -1,20 +1,18 @@
 import {RoverDesigner} from "./rover-designer.component";
-
-export type Sense = 'L' | 'R';
-export type Orientation = 'E' | 'N' | 'W' | 'S';
+import {Direction, State} from "../service/mars-rover.class";
 
 interface OrientationInfo {
-    orientation: Orientation;
+    orientation: Direction;
     angle: number;
-    L: Orientation;
-    R: Orientation;
+    L: Direction;
+    R: Direction;
 }
 
 export class GridDesigner {
     private readonly PRIMARY_COLOR = "#33ffbb";
     private readonly SECONDARY_COLOR = "#ed2939";
-    private readonly NUMBER_OF_COLUMNS: number = 11;
-    private readonly NUMBER_OF_ROWS: number = 11;
+    private readonly numberofcolumns: number = 11;
+    private readonly numberofrows: number = 11;
     private readonly ORIENTATIONS: OrientationInfo[] = [
         {orientation: 'E', angle: 1, L: 'N', R: 'S'},
         {orientation: 'N', angle: 1 / 2, L: 'W', R: 'E'},
@@ -30,7 +28,9 @@ export class GridDesigner {
     private cellSize: number;
     private roverDesigner: RoverDesigner;
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor(canvas: HTMLCanvasElement, gridSize: number) {
+        this.numberofcolumns = gridSize;
+        this.numberofrows = gridSize;
         this.canvas = canvas;
         this.canvasCtx = this.canvas.getContext('2d');
         this.roverDesigner = new RoverDesigner(this.PRIMARY_COLOR, this.SECONDARY_COLOR, this.canvasCtx);
@@ -39,57 +39,27 @@ export class GridDesigner {
     set size(size: { width: number; height: number; }) {
         this.canvas.width = size.width;
         this.canvas.height = size.height;
-        this.width = this.canvas.width / this.NUMBER_OF_COLUMNS;
-        this.height = this.canvas.height / this.NUMBER_OF_ROWS;
+        this.width = this.canvas.width / (this.numberofcolumns + 1);
+        this.height = this.canvas.height / (this.numberofrows + 1);
         this.cellSize = Math.max(this.width, this.height);
         this.roverDesigner.size = this.cellSize / 3;
     }
 
-    public draw(x: number, y: number, orientation: string): void {
+    public draw(state: State): void {
         this.clear();
         this.drawGrid();
-        this.drawRoverByOrientation(x, y, (orientation));
-        this.drawRoverByOrientation(x - 1, y, 'W');
-        this.drawRoverByOrientation(x, y - 1, 'S');
-        this.drawRoverByOrientation(x + 1, y, 'E');
-        this.drawRoverByOrientation(x, y + 1, 'N');
-    }
-
-    public rotateRover(sense: Sense): void {
-        const orientation = this.getOrientationInfo(this.roverDesigner.orientation)[sense];
-        this.rotateRoverByDirection(this.getDirection(orientation));
-        this.roverDesigner.orientation = orientation;
-    }
-
-    public rotateRoverByDirection(direction: number): void {
-        const roverDirection = this.roverDesigner.direction;
-        if (roverDirection !== direction) {
-            this.clear();
-            this.drawGrid();
-
-            let newDirection;
-            if (roverDirection < direction) {
-                newDirection = roverDirection + 1 / 16;
-            } else {
-                newDirection = roverDirection - 1 / 16;
-            }
-            this.roverDesigner.drawRover({direction: newDirection});
-
-            setTimeout(() => this.rotateRoverByDirection(direction), 100);
-        }
+        this.drawRover(state);
     }
 
     public getDirection(orientation: string): number {
-        return this.getOrientationInfo(orientation).angle;
+        return this.getDirectionInfo(orientation).angle;
     }
 
-    private getOrientationInfo(orientation: string): OrientationInfo {
+    private getDirectionInfo(orientation: string): OrientationInfo {
         const orientationInfo = this.ORIENTATIONS.find(o => o.orientation === orientation.toUpperCase());
-
         if (!orientationInfo) {
             throw new Error(`Unknown orientation ${orientation}`)
         }
-
         return orientationInfo;
 
     }
@@ -109,8 +79,8 @@ export class GridDesigner {
     private drawHLines() {
         this.canvasCtx.strokeStyle = this.PRIMARY_COLOR;
         this.canvasCtx.lineWidth = 0.55;
-        for (let j = 1; j < this.NUMBER_OF_COLUMNS; j++) {
-            const y = j * this.height;
+        for (let j = 0; j < this.numberofcolumns; j++) {
+            const y = (j + 1) * this.height;
             this.canvasCtx.moveTo(this.width, y);
             this.canvasCtx.lineTo(this.canvas.width, y);
         }
@@ -120,8 +90,8 @@ export class GridDesigner {
     private drawVLines() {
         this.canvasCtx.strokeStyle = this.PRIMARY_COLOR;
         this.canvasCtx.lineWidth = 0.55;
-        for (let i = 1; i < this.NUMBER_OF_ROWS; i++) {
-            const x = i * this.width;
+        for (let i = 0; i < this.numberofrows; i++) {
+            const x = (i + 1) * this.width;
             const y = this.canvas.height - this.height;
             this.canvasCtx.moveTo(x, 0);
             this.canvasCtx.lineTo(x, y);
@@ -132,43 +102,43 @@ export class GridDesigner {
     private writeXPosition() {
         this.canvasCtx.fillStyle = this.PRIMARY_COLOR;
         this.canvasCtx.font = '20px serif';
-        for (let x = 1; x < this.NUMBER_OF_ROWS; x++) {
+        for (let x = 0; x < this.numberofrows; x++) {
             const displayedValue = `${x}`;
             const measureText = (this.canvasCtx.measureText(displayedValue));
             const textSize = {width: measureText.width, height: measureText.actualBoundingBoxAscent};
             const xpos = (this.width - textSize.width) / 2;
             const ypos = this.height - (this.height - textSize.height) / 2;
-            this.canvasCtx.fillText(displayedValue, xpos + this.width * x, ypos + this.height * (this.NUMBER_OF_COLUMNS - 1));
+            this.canvasCtx.fillText(displayedValue, xpos + this.width * (x + 1), ypos + this.height * (this.numberofcolumns));
         }
     }
 
     private writeYPosition() {
         this.canvasCtx.fillStyle = this.PRIMARY_COLOR;
         this.canvasCtx.font = '20px serif';
-        for (let y = 0; y < this.NUMBER_OF_COLUMNS; y++) {
+        for (let y = 0; y < this.numberofcolumns; y++) {
             const displayedValue = `${y}`;
             const measureText = (this.canvasCtx.measureText(displayedValue));
             const textSize = {width: measureText.width, height: measureText.actualBoundingBoxAscent};
             const xpos = (this.width - textSize.width) / 2;
             const ypos = this.height - (this.height - textSize.height) / 2;
-            this.canvasCtx.fillText(displayedValue, xpos, ypos + this.height * (this.NUMBER_OF_COLUMNS - (y + 1)));
+            this.canvasCtx.fillText(displayedValue, xpos, ypos + this.height * (this.numberofcolumns - (y + 1)));
         }
     }
 
-    private drawRoverByOrientation(x: number, y: number, orientation: string) {
-        this.roverDesigner.orientation = orientation;
-        this.drawRover(x, y, this.getDirection(orientation));
-    }
-
-    private drawRover(x: number, y: number, direction: number) {
-        this.roverDesigner.drawRover({x: this.getXPosition(x), y: this.getYPosition(y), direction});
+    private drawRover({position, direction}: State) {
+        this.roverDesigner.orientation = direction;
+        this.roverDesigner.drawRover({
+            x: this.getXPosition(position.x),
+            y: this.getYPosition(position.y),
+            direction: this.getDirection(direction)
+        });
     }
 
     private getYPosition(y: number) {
-        return (this.NUMBER_OF_ROWS - y - 0.5) * this.cellSize;
+        return (this.numberofrows - y - 0.5) * this.cellSize;
     }
 
     private getXPosition(x: number) {
-        return (x + 0.5) * this.cellSize;
+        return ((x + 1) + 0.5) * this.cellSize;
     }
 }
