@@ -18,12 +18,42 @@ export class MarsRover {
     }
 
     do(commands: string): Position {
-        if(commands === 'f'){
-            this._position.y++;
-        } else if(commands === 'b') {
-            this._position.y--;
-        }
-
+        commands.split('').forEach((command) => {
+            this.doCommand(command);
+        })
         return this._position;
+    }
+
+    private doCommand(command: string) {
+        if (command === 'f') {
+            this.moveForward();
+        } else if (command === 'b') {
+            this.moveBackward();
+        }
+    }
+
+    private moveForward() {
+        if (this.direction === 'N') {
+            this._position.y++;
+        } else if (this.direction == 'W') {
+            this.position.x--;
+        } else if (this.direction == 'S') {
+            this.position.y--;
+        } else if (this.direction == 'E') {
+            this.position.x++;
+        }
+    }
+
+
+    private moveBackward() {
+        if (this.direction === 'N') {
+            this._position.y--;
+        } else if (this.direction == 'W') {
+            this.position.x++;
+        } else if (this.direction == 'S') {
+            this.position.y++;
+        } else if (this.direction == 'E') {
+            this.position.x--;
+        }
     }
 }

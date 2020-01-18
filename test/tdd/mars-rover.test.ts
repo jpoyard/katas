@@ -47,9 +47,46 @@ describe(MarsRover.name, () => {
                     when: {commands: 'b'},
                     then: {position: {x: -1, y: -2}}
                 },
-                // {given: {position: {x: 0, y: 0}, direction: 'W'}},
-                // {given: {position: {x: 0, y: 0}, direction: 'S'}},
-                // {given: {position: {x: 0, y: 0}, direction: 'E'}},
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'W'},
+                    when: {commands: 'f'},
+                    then: {position: {x: -1, y: 0}}
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'W'},
+                    when: {commands: 'b'},
+                    then: {position: {x: 1, y: 0}}
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'S'},
+                    when: {commands: 'f'},
+                    then: {position: {x: 0, y: -1}}
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'S'},
+                    when: {commands: 'b'},
+                    then: {position: {x: 0, y: 1}}
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'E'},
+                    when: {commands: 'f'},
+                    then: {position: {x: 1, y: 0}}
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'E'},
+                    when: {commands: 'b'},
+                    then: {position: {x: -1, y: 0}}
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'N'},
+                    when: {commands: 'ff'},
+                    then: {position: {x: 0, y: 2}}
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'E'},
+                    when: {commands: 'bbfbb'},
+                    then: {position: {x: -3, y: 0}}
+                },
             ].forEach((scenario: { given: { position: Position, direction: Direction }, when: { commands: string }, then: { position: Position } }) => {
                 it(`
 should return ${JSON.stringify(scenario.then.position)}, 
