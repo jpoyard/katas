@@ -40,11 +40,25 @@ export class MarsRover {
         } else if (command === 'b') {
             this.moveBackward();
         } else if (command === 'l') {
-            this.rotateLeft();
+            this.turnLeft();
+        } else if (command === 'r') {
+            this.turnRight();
         }
     }
 
-    private rotateLeft() {
+    private turnRight() {
+        if (this.direction === 'N') {
+            this._direction = 'E';
+        } else if (this.direction == 'E') {
+            this._direction = 'S';
+        } else if (this.direction == 'S') {
+            this._direction = 'W';
+        } else if (this.direction == 'W') {
+            this._direction = 'N';
+        }
+    }
+
+    private turnLeft() {
         if (this.direction === 'N') {
             this._direction = 'W';
         } else if (this.direction == 'W') {

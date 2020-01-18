@@ -148,13 +148,45 @@ and call do method with '${scenario.when.commands}' commands`, () => {
                         {position: {x: 0, y: 0}, direction: 'N'}
                     ]
                 },
-                // {
-                //     given: {position: {x: 0, y: 0}, direction: 'N'},
-                //     when: {commands: 'r'},
-                //     then: [
-                //         {position: {x: 0, y: 0}, direction: 'E'}
-                //     ]
-                // }
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'N'},
+                    when: {commands: 'r'},
+                    then: [
+                        {position: {x: 0, y: 0}, direction: 'E'}
+                    ]
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'E'},
+                    when: {commands: 'r'},
+                    then: [
+                        {position: {x: 0, y: 0}, direction: 'S'}
+                    ]
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'S'},
+                    when: {commands: 'r'},
+                    then: [
+                        {position: {x: 0, y: 0}, direction: 'W'}
+                    ]
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'W'},
+                    when: {commands: 'r'},
+                    then: [
+                        {position: {x: 0, y: 0}, direction: 'N'}
+                    ]
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'W'},
+                    when: {commands: 'rrlrr'},
+                    then: [
+                        {position: {x: 0, y: 0}, direction: 'N'},
+                        {position: {x: 0, y: 0}, direction: 'E'},
+                        {position: {x: 0, y: 0}, direction: 'N'},
+                        {position: {x: 0, y: 0}, direction: 'E'},
+                        {position: {x: 0, y: 0}, direction: 'S'}
+                    ]
+                }
             ].forEach((scenario: {
                 given: { position: Position, direction: Direction },
                 when: { commands: string },
