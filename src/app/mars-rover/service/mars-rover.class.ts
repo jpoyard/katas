@@ -39,6 +39,20 @@ export class MarsRover {
             this.moveForward();
         } else if (command === 'b') {
             this.moveBackward();
+        } else if (command === 'l') {
+            this.rotateLeft();
+        }
+    }
+
+    private rotateLeft() {
+        if (this.direction === 'N') {
+            this._direction = 'W';
+        } else if (this.direction == 'W') {
+            this._direction = 'S';
+        } else if (this.direction == 'S') {
+            this._direction = 'E';
+        } else if (this.direction == 'E') {
+            this._direction = 'N';
         }
     }
 

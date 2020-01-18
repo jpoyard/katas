@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {Direction, MarsRover, Position} from "../../src/app/mars-rover/service/mars-rover.class";
+import {Direction, MarsRover, Position, State} from "../../src/app/mars-rover/service/mars-rover.class";
 
 describe(MarsRover.name, () => {
     let marsRover: MarsRover;
@@ -99,7 +99,7 @@ describe(MarsRover.name, () => {
             ].forEach((scenario: {
                 given: { position: Position, direction: Direction },
                 when: { commands: string },
-                then: Array<{ position: Position, direction: Direction }>
+                then: Array<State>
             }) => {
                 it(`
 should return ${JSON.stringify(scenario.then)}, 
@@ -113,10 +113,69 @@ and call do method with '${scenario.when.commands}' commands`, () => {
 
                     // Then
                     expect(actual).eql(scenario.then);
-                    expect(marsRover.position).eql(scenario.then.reverse()[0].position);
-                    expect(marsRover.direction).eq(scenario.given.direction);
+                    expect(marsRover.state).eql(scenario.then.reverse()[0]);
                 })
             })
-        })
+        });
+
+        describe('Implement commands that turn the rover left/right (l,r).', () => {
+            [
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'N'},
+                    when: {commands: 'l'},
+                    then: [
+                        {position: {x: 0, y: 0}, direction: 'W'}
+                    ]
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'W'},
+                    when: {commands: 'l'},
+                    then: [
+                        {position: {x: 0, y: 0}, direction: 'S'}
+                    ]
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'S'},
+                    when: {commands: 'l'},
+                    then: [
+                        {position: {x: 0, y: 0}, direction: 'E'}
+                    ]
+                },
+                {
+                    given: {position: {x: 0, y: 0}, direction: 'E'},
+                    when: {commands: 'l'},
+                    then: [
+                        {position: {x: 0, y: 0}, direction: 'N'}
+                    ]
+                },
+                // {
+                //     given: {position: {x: 0, y: 0}, direction: 'N'},
+                //     when: {commands: 'r'},
+                //     then: [
+                //         {position: {x: 0, y: 0}, direction: 'E'}
+                //     ]
+                // }
+            ].forEach((scenario: {
+                given: { position: Position, direction: Direction },
+                when: { commands: string },
+                then: Array<State>
+            }) => {
+                it(`
+should return ${JSON.stringify(scenario.then)}, 
+when given params are ${JSON.stringify(scenario.given)} 
+and call do method with '${scenario.when.commands}' commands\`, () => {           
+           `, () => {
+                    // Given
+                    marsRover = new MarsRover(scenario.given.position, scenario.given.direction);
+
+                    // When
+                    const actual = marsRover.do(scenario.when.commands);
+
+                    // Then
+                    expect(actual).eql(scenario.then);
+                    expect(marsRover.state).eql(scenario.then.reverse()[0]);
+                })
+            })
+        });
     })
 });
