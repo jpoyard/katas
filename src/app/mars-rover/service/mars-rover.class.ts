@@ -11,7 +11,11 @@ export interface State {
 }
 
 export class MarsRover {
-    constructor(private _position: Position, private _direction: Direction) {
+    constructor(private _position: Position, private _direction: Direction, private _gridSize: number = 10) {
+    }
+
+    public get gridSize(): number {
+        return this._gridSize;
     }
 
     public get position(): Position {
@@ -26,12 +30,11 @@ export class MarsRover {
         return {position: {...this.position}, direction: this.direction};
     }
 
-    do(commands: string): State[] {
-        const result: State[] = commands.split('').map((command) => {
+    public do(commands: string): State[] {
+        return commands.split('').map((command) => {
             this.doCommand(command);
             return this.state;
         });
-        return result;
     }
 
     private doCommand(command: string) {
@@ -72,26 +75,55 @@ export class MarsRover {
 
     private moveForward() {
         if (this.direction === 'N') {
-            this._position.y++;
+            this.moveForwardY();
         } else if (this.direction == 'W') {
-            this.position.x--;
+            this.moveBackwardX();
         } else if (this.direction == 'S') {
-            this.position.y--;
+            this.moveBackwardY();
         } else if (this.direction == 'E') {
-            this.position.x++;
+            this.moveForwardX();
         }
     }
-
 
     private moveBackward() {
         if (this.direction === 'N') {
-            this._position.y--;
+            this.moveBackwardY();
         } else if (this.direction == 'W') {
-            this.position.x++;
+            this.moveForwardX();
         } else if (this.direction == 'S') {
-            this.position.y++;
+            this.moveForwardY();
         } else if (this.direction == 'E') {
-            this.position.x--;
+            this.moveBackwardX();
         }
     }
+
+    private moveForwardX() {
+        this.position.x = this.moveForwardValue(this.position.x)
+    }
+
+    private moveForwardY() {
+        this.position.y = this.moveForwardValue(this.position.y)
+    }
+
+    private moveForwardValue(value: number) {
+        return (value + 1) % this.gridSize;
+    }
+
+    private moveBackwardX() {
+        this.position.x = this.moveBackwardValue(this.position.x)
+    }
+
+    private moveBackwardY() {
+        this.position.y = this.moveBackwardValue(this.position.y)
+    }
+
+    private moveBackwardValue(value: number) {
+        const result = value;
+        if (result === 0) {
+            return this.gridSize - 1;
+        } else {
+            return value - 1;
+        }
+    }
+
 }

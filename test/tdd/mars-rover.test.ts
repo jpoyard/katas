@@ -1,21 +1,46 @@
 import {expect} from 'chai';
 import {Direction, MarsRover, Position, State} from "../../src/app/mars-rover/service/mars-rover.class";
 
-describe(MarsRover.name, () => {
-    let marsRover: MarsRover;
+interface RoverScenario {
+    given: { position: Position, direction: Direction, gridSize: number },
+    when: { commands: string },
+    then: Array<State>
+}
 
+const gridSize = 10;
+
+function testDoMethod(scenario: RoverScenario) {
+    it(`
+should return ${JSON.stringify(scenario.then)}, 
+when given params are ${JSON.stringify(scenario.given)} 
+and call do method with '${scenario.when.commands}' commands\`, () => {           
+           `, () => {
+        // Given
+        scenario.given.gridSize = scenario.given.gridSize ? scenario.given.gridSize : gridSize;
+        const marsRover = new MarsRover(scenario.given.position, scenario.given.direction, scenario.given.gridSize);
+
+        // When
+        const actual = marsRover.do(scenario.when.commands);
+
+        // Then
+        expect(actual).eql(scenario.then);
+        expect(marsRover.state).eql(scenario.then.reverse()[0]);
+    })
+}
+
+describe(MarsRover.name, () => {
     describe('You are given the initial starting point (x,y) of a rover and the direction (N,S,E,W) it is facing.', () => {
         [
             {given: {position: {x: 0, y: 1}, direction: 'N'}},
-            {given: {position: {x: -1, y: 0}, direction: 'W'}},
-            {given: {position: {x: 0, y: -1}, direction: 'S'}},
+            {given: {position: {x: gridSize - 1, y: 0}, direction: 'W'}},
+            {given: {position: {x: 0, y: gridSize - 1}, direction: 'S'}},
             {given: {position: {x: 1, y: 0}, direction: 'E'}},
-        ].forEach((scenario: { given: { position: Position, direction: Direction } }) => {
+        ].forEach((scenario: { given: State }) => {
             it(`should create a new mars rover according given position and direction`, () => {
                 // Given
 
                 // When
-                marsRover = new MarsRover(scenario.given.position, scenario.given.direction);
+                let marsRover = new MarsRover(scenario.given.position, scenario.given.direction, 10);
 
                 // Then
                 expect(marsRover.position).equals(scenario.given.position);
@@ -35,7 +60,7 @@ describe(MarsRover.name, () => {
                 {
                     given: {position: {x: 0, y: 0}, direction: 'N'},
                     when: {commands: 'b'},
-                    then: [{position: {x: 0, y: -1}, direction: 'N'}]
+                    then: [{position: {x: 0, y: gridSize - 1}, direction: 'N'}]
                 },
                 {
                     given: {position: {x: 1, y: 1}, direction: 'N'},
@@ -43,14 +68,14 @@ describe(MarsRover.name, () => {
                     then: [{position: {x: 1, y: 2}, direction: 'N'}]
                 },
                 {
-                    given: {position: {x: -1, y: -1}, direction: 'N'},
+                    given: {position: {x: gridSize - 1, y: gridSize - 1}, direction: 'N'},
                     when: {commands: 'b'},
-                    then: [{position: {x: -1, y: -2}, direction: 'N'}]
+                    then: [{position: {x: gridSize - 1, y: gridSize - 2}, direction: 'N'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'W'},
                     when: {commands: 'f'},
-                    then: [{position: {x: -1, y: 0}, direction: 'W'}]
+                    then: [{position: {x: gridSize - 1, y: 0}, direction: 'W'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'W'},
@@ -60,7 +85,7 @@ describe(MarsRover.name, () => {
                 {
                     given: {position: {x: 0, y: 0}, direction: 'S'},
                     when: {commands: 'f'},
-                    then: [{position: {x: 0, y: -1}, direction: 'S'}]
+                    then: [{position: {x: 0, y: gridSize - 1}, direction: 'S'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'S'},
@@ -75,7 +100,7 @@ describe(MarsRover.name, () => {
                 {
                     given: {position: {x: 0, y: 0}, direction: 'E'},
                     when: {commands: 'b'},
-                    then: [{position: {x: -1, y: 0}, direction: 'E'}]
+                    then: [{position: {x: gridSize - 1, y: 0}, direction: 'E'}]
                 },
                 {
                     given: {position: {x: 0, y: 0}, direction: 'N'},
@@ -89,32 +114,15 @@ describe(MarsRover.name, () => {
                     given: {position: {x: 0, y: 0}, direction: 'E'},
                     when: {commands: 'bbfbb'},
                     then: [
-                        {position: {x: -1, y: 0}, direction: 'E'},
-                        {position: {x: -2, y: 0}, direction: 'E'},
-                        {position: {x: -1, y: 0}, direction: 'E'},
-                        {position: {x: -2, y: 0}, direction: 'E'},
-                        {position: {x: -3, y: 0}, direction: 'E'},
+                        {position: {x: gridSize - 1, y: 0}, direction: 'E'},
+                        {position: {x: gridSize - 2, y: 0}, direction: 'E'},
+                        {position: {x: gridSize - 1, y: 0}, direction: 'E'},
+                        {position: {x: gridSize - 2, y: 0}, direction: 'E'},
+                        {position: {x: gridSize - 3, y: 0}, direction: 'E'},
                     ]
                 },
-            ].forEach((scenario: {
-                given: { position: Position, direction: Direction },
-                when: { commands: string },
-                then: Array<State>
-            }) => {
-                it(`
-should return ${JSON.stringify(scenario.then)}, 
-when given params are ${JSON.stringify(scenario.given)} 
-and call do method with '${scenario.when.commands}' commands`, () => {
-                    // Given
-                    marsRover = new MarsRover(scenario.given.position, scenario.given.direction);
-
-                    // When
-                    const actual = marsRover.do(scenario.when.commands);
-
-                    // Then
-                    expect(actual).eql(scenario.then);
-                    expect(marsRover.state).eql(scenario.then.reverse()[0]);
-                })
+            ].forEach((scenario: RoverScenario) => {
+                testDoMethod(scenario);
             })
         });
 
@@ -187,27 +195,40 @@ and call do method with '${scenario.when.commands}' commands`, () => {
                         {position: {x: 0, y: 0}, direction: 'S'}
                     ]
                 }
-            ].forEach((scenario: {
-                given: { position: Position, direction: Direction },
-                when: { commands: string },
-                then: Array<State>
-            }) => {
-                it(`
-should return ${JSON.stringify(scenario.then)}, 
-when given params are ${JSON.stringify(scenario.given)} 
-and call do method with '${scenario.when.commands}' commands\`, () => {           
-           `, () => {
-                    // Given
-                    marsRover = new MarsRover(scenario.given.position, scenario.given.direction);
-
-                    // When
-                    const actual = marsRover.do(scenario.when.commands);
-
-                    // Then
-                    expect(actual).eql(scenario.then);
-                    expect(marsRover.state).eql(scenario.then.reverse()[0]);
-                })
+            ].forEach((scenario: RoverScenario) => {
+                testDoMethod(scenario);
             })
         });
+
+        describe('Implement wrapping from one edge of the grid to another. (planets are spheres after all)', () => {
+            [{
+                given: {position: {x: 0, y: 0}, direction: 'E', gridSize},
+                when: {commands: 'b'},
+                then: [
+                    {position: {x: gridSize - 1, y: 0}, direction: 'E'}
+                ]
+            }, {
+                given: {position: {x: 0, y: 0}, direction: 'N', gridSize},
+                when: {commands: 'b'},
+                then: [
+                    {position: {x: 0, y: gridSize - 1}, direction: 'N'}
+                ]
+            }, {
+                given: {position: {x: gridSize - 1, y: 0}, direction: 'E', gridSize},
+                when: {commands: 'f'},
+                then: [
+                    {position: {x: 0, y: 0}, direction: 'E'}
+                ]
+            }, {
+                given: {position: {x: 0, y: gridSize - 1}, direction: 'N', gridSize},
+                when: {commands: 'f'},
+                then: [
+                    {position: {x: 0, y: 0}, direction: 'N'}
+                ]
+            }].forEach((scenario: RoverScenario) => {
+                testDoMethod(scenario);
+            });
+        })
     })
+
 });
