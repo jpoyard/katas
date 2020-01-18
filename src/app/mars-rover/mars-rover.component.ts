@@ -12,16 +12,21 @@ export class MarsRoverElement extends HTMLElement {
     private marsRover: MarsRover;
     private canvas: HTMLCanvasElement;
     private gridSize: number;
+    private input: HTMLInputElement;
 
     constructor() {
         super();
         this.gridSize = 10;
         this.init();
-        this.gridDesigner = new GridDesigner(this.canvas, this.gridSize);
+        this.gridDesigner = new GridDesigner(this.canvas, this.gridSize, this.log.bind(this));
         this.marsRover = new MarsRover({x: 0, y: 0}, 'N', this.gridSize);
         window.addEventListener('resize', () => this.resize());
         this.resize();
-        setTimeout(() => this.do(), 2000);
+    }
+
+    public log(state: State): void {
+        this.console.innerHTML = this.console.innerHTML +
+            `<span>{x:${state.position.x}, y:${state.position.y}} - '${state.direction}'</span>`;
     }
 
     public resize() {
@@ -33,32 +38,48 @@ export class MarsRoverElement extends HTMLElement {
             });
     }
 
-    public do() {
+    public load() {
         const state = this.marsRover.state;
-        const states = [state, ...this.marsRover.do('ffrfflfffrffflbbbrffrfflfffl')].reverse();
+        const states = [state, ...this.marsRover.do(this.input.value)].reverse();
         this.gridDesigner.draw(states);
     }
 
     private init() {
         this.shadow = this.attachShadow({mode: 'open'});
-
-        const wrapper = this.getContent();
-
         const style = document.createElement('style');
-
         style.textContent = STYLE;
-
         this.shadow.appendChild(style);
-        this.shadow.appendChild(wrapper);
+        this.shadow.appendChild(this.getToolbar());
+        this.input.value = 'ffrfflfffrffflbbbrffrfflfffl';
+        this.shadow.appendChild(this.getContainer());
     }
 
-    private getContent(): HTMLElement {
+    private getToolbar(): HTMLElement {
+        const toolbar = document.createElement('div');
+        toolbar.classList.add('toolbar');
+
+        this.input = document.createElement('input');
+        toolbar.appendChild(this.input);
+
+        const button = document.createElement('button');
+        button.textContent = 'load';
+        button.onclick = ()=>this.load();
+        toolbar.appendChild(button);
+
+        return toolbar;
+    }
+
+    private getContainer(): HTMLElement {
         const container = document.createElement('div');
         container.classList.add('container');
 
+        const sidebar = document.createElement('div');
+        sidebar.classList.add('sidebar');
+        container.appendChild(sidebar);
+
         this.console = document.createElement('div');
         this.console.classList.add('console');
-        container.appendChild(this.console);
+        sidebar.appendChild(this.console);
 
         this.map = document.createElement('div');
         this.map.classList.add('map');

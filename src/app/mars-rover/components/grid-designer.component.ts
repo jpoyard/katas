@@ -4,10 +4,7 @@ import {State} from "../service/mars-rover.class";
 export class GridDesigner {
     private readonly PRIMARY_COLOR = "#33ffbb";
     private readonly SECONDARY_COLOR = "#ed2939";
-    private readonly numberofcolumns: number = 11;
-    private readonly numberofrows: number = 11;
 
-    private canvas: HTMLCanvasElement;
     private canvasCtx: CanvasRenderingContext2D;
 
     private width: number;
@@ -16,10 +13,11 @@ export class GridDesigner {
     private roverDesigner: RoverDesigner;
     private states: State[] = [];
 
-    constructor(canvas: HTMLCanvasElement, gridSize: number) {
-        this.numberofcolumns = gridSize;
-        this.numberofrows = gridSize;
-        this.canvas = canvas;
+    constructor(
+        private canvas: HTMLCanvasElement,
+        private gridSize: number,
+        private log?: (State) => void
+    ) {
         this.canvasCtx = this.canvas.getContext('2d');
         this.roverDesigner = new RoverDesigner(this.PRIMARY_COLOR, this.SECONDARY_COLOR, this.canvasCtx);
         setInterval(() => {
@@ -30,8 +28,8 @@ export class GridDesigner {
     set size(size: { width: number; height: number; }) {
         this.canvas.width = size.width;
         this.canvas.height = size.height;
-        this.width = this.canvas.width / (this.numberofcolumns + 1);
-        this.height = this.canvas.height / (this.numberofrows + 1);
+        this.width = this.canvas.width / (this.gridSize + 1);
+        this.height = this.canvas.height / (this.gridSize + 1);
         this.cellSize = Math.max(this.width, this.height);
         this.roverDesigner.size = this.cellSize / 3;
     }
@@ -54,6 +52,7 @@ export class GridDesigner {
     private drawFrame() {
         if (this.states.length > 0) {
             const state = (this.states.pop());
+            this.log(state);
             this.drawState(state);
             this.drawState(state);
         }
@@ -74,7 +73,7 @@ export class GridDesigner {
     private drawHLines() {
         this.canvasCtx.strokeStyle = this.PRIMARY_COLOR;
         this.canvasCtx.lineWidth = 0.55;
-        for (let j = 0; j < this.numberofcolumns; j++) {
+        for (let j = 0; j < this.gridSize; j++) {
             const y = (j + 1) * this.height;
             this.canvasCtx.moveTo(this.width, y);
             this.canvasCtx.lineTo(this.canvas.width, y);
@@ -85,7 +84,7 @@ export class GridDesigner {
     private drawVLines() {
         this.canvasCtx.strokeStyle = this.PRIMARY_COLOR;
         this.canvasCtx.lineWidth = 0.55;
-        for (let i = 0; i < this.numberofrows; i++) {
+        for (let i = 0; i < this.gridSize; i++) {
             const x = (i + 1) * this.width;
             const y = this.canvas.height - this.height;
             this.canvasCtx.moveTo(x, 0);
@@ -97,31 +96,31 @@ export class GridDesigner {
     private writeXPosition() {
         this.canvasCtx.fillStyle = this.PRIMARY_COLOR;
         this.canvasCtx.font = '20px serif';
-        for (let x = 0; x < this.numberofrows; x++) {
+        for (let x = 0; x < this.gridSize; x++) {
             const displayedValue = `${x}`;
             const measureText = (this.canvasCtx.measureText(displayedValue));
             const textSize = {width: measureText.width, height: measureText.actualBoundingBoxAscent};
             const xpos = (this.width - textSize.width) / 2;
             const ypos = this.height - (this.height - textSize.height) / 2;
-            this.canvasCtx.fillText(displayedValue, xpos + this.width * (x + 1), ypos + this.height * (this.numberofcolumns));
+            this.canvasCtx.fillText(displayedValue, xpos + this.width * (x + 1), ypos + this.height * (this.gridSize));
         }
     }
 
     private writeYPosition() {
         this.canvasCtx.fillStyle = this.PRIMARY_COLOR;
         this.canvasCtx.font = '20px serif';
-        for (let y = 0; y < this.numberofcolumns; y++) {
+        for (let y = 0; y < this.gridSize; y++) {
             const displayedValue = `${y}`;
             const measureText = (this.canvasCtx.measureText(displayedValue));
             const textSize = {width: measureText.width, height: measureText.actualBoundingBoxAscent};
             const xpos = (this.width - textSize.width) / 2;
             const ypos = this.height - (this.height - textSize.height) / 2;
-            this.canvasCtx.fillText(displayedValue, xpos, ypos + this.height * (this.numberofcolumns - (y + 1)));
+            this.canvasCtx.fillText(displayedValue, xpos, ypos + this.height * (this.gridSize - (y + 1)));
         }
     }
 
     private getYPosition(y: number) {
-        return (this.numberofrows - y - 0.5) * this.cellSize;
+        return (this.gridSize - y - 0.5) * this.cellSize;
     }
 
     private getXPosition(x: number) {
