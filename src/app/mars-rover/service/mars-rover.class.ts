@@ -19,9 +19,9 @@ export class MarsRover {
 
     do(commands: string): Position {
         if(commands === 'f'){
-            this._position = {x: 0, y: 1};
+            this._position.y++;
         } else if(commands === 'b') {
-            this._position = {x: 0, y: -1};
+            this._position.y--;
         }
 
         return this._position;

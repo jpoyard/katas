@@ -37,6 +37,16 @@ describe(MarsRover.name, () => {
                     when: {commands: 'b'},
                     then: {position: {x: 0, y: -1}}
                 },
+                {
+                    given: {position: {x: 1, y: 1}, direction: 'N'},
+                    when: {commands: 'f'},
+                    then: {position: {x: 1, y: 2}}
+                },
+                {
+                    given: {position: {x: -1, y: -1}, direction: 'N'},
+                    when: {commands: 'b'},
+                    then: {position: {x: -1, y: -2}}
+                },
                 // {given: {position: {x: 0, y: 0}, direction: 'W'}},
                 // {given: {position: {x: 0, y: 0}, direction: 'S'}},
                 // {given: {position: {x: 0, y: 0}, direction: 'E'}},
