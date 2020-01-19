@@ -8,6 +8,7 @@ describe('isLeapYear()', () => {
         {when: 2001, then: false},
         {when: 2012, then: true},
         {when: 1900, then: false},
+        {when: 2000, then: true},
     ].forEach(scenario => {
         it(`
 should return ${scenario.then}, 

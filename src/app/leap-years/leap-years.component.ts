@@ -1,8 +1,8 @@
 import {STYLE} from "./leap-years.component.style";
+import {isLeapYear} from "./service/leap-years.function";
 
 export class LeapYearsElement extends HTMLElement {
-    public static readonly EXPRESSIONS = [];
-    // private leapYears: RPNCalculator = new RPNCalculator();
+    public static readonly YEARS = [1996, 2001, 2012, 1900, 2000];
     private shadow: ShadowRoot;
 
     constructor() {
@@ -27,8 +27,8 @@ export class LeapYearsElement extends HTMLElement {
         const container = document.createElement('div');
         container.classList.add('container');
 
-        LeapYearsElement.EXPRESSIONS.forEach(
-            expression => {
+        LeapYearsElement.YEARS.forEach(
+            year => {
                 const row = document.createElement('div');
                 row.classList.add('row');
                 container.appendChild(row);
@@ -36,7 +36,7 @@ export class LeapYearsElement extends HTMLElement {
                 const cellExpression = document.createElement('div');
                 cellExpression.classList.add('cell');
                 cellExpression.classList.add('expression');
-                cellExpression.textContent = expression;
+                cellExpression.textContent = year.toString();
                 row.appendChild(cellExpression);
 
                 const cellEqual = document.createElement('div');
@@ -48,7 +48,7 @@ export class LeapYearsElement extends HTMLElement {
                 const cellResult = document.createElement('div');
                 cellResult.classList.add('cell');
                 cellResult.classList.add('result');
-                // cellResult.textContent = this.leapYears.calculate(expression).toString();
+                cellResult.textContent = `is ${isLeapYear(year) ? 'leap' : 'common'} year`;
                 row.appendChild(cellResult);
             }
         );

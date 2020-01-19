@@ -1,10 +1,11 @@
-import {FizzBuzzElement} from './fizz-buzz/fizz-buzz.component';
+import {FizzBuzzElement} from './fizz-buzz';
 import './style.css';
 import {RpnCalculatorElement} from "./rpn-calculator";
+import {LeapYearsElement} from "./leap-years/leap-years.component";
 
 const PACKAGE = require('./../../package.json');
 
-const ELEMENTS = [FizzBuzzElement, RpnCalculatorElement];
+const ELEMENTS = [LeapYearsElement, FizzBuzzElement, RpnCalculatorElement];
 
 function getName(constructor: Function) {
     return constructor.name
@@ -17,7 +18,7 @@ export const defineElements: () => void = () => {
         const name = getName(constructor);
         customElements.define(name, constructor);
     })
-}
+};
 
 function createHeader(bodyElement: HTMLElement): HTMLElement {
     const headerElement = document.createElement('header');
@@ -30,11 +31,11 @@ function createHeader(bodyElement: HTMLElement): HTMLElement {
         button.textContent = name;
         button.onclick = () => {
             bodyElement.innerHTML = `<${name} style="display: flex; flex: 1 1 auto"></${name}>`
-        }
+        };
 
 
         headerElement.appendChild(button);
-    })
+    });
     return headerElement;
 }
 
@@ -64,6 +65,6 @@ export const createElement: () => HTMLElement = () => {
     mainElement.appendChild(createFooter());
 
     return mainElement;
-}
+};
 
 
