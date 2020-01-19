@@ -4,7 +4,7 @@ interface NumberCounter {
 }
 
 export class OneTwo {
-    private static readonly i18n = new Map([
+    private static readonly i18nNumberToWorldMap = new Map([
         ['1', 'one'],
         ['2', 'two'],
         ['3', 'three'],
@@ -28,8 +28,10 @@ export class OneTwo {
             .split(' ')
             .reduce<NumberCounter[]>(
                 (acc: NumberCounter[], cur: string) => {
-                    if (acc.length > 0 && acc[acc.length-1].value === cur) {
-                        acc[acc.length-1].count++;
+                    if (acc.length > 0
+                        && acc[acc.length - 1].count < 9
+                        && acc[acc.length - 1].value === cur) {
+                        acc[acc.length - 1].count++;
                     } else {
                         acc.push({count: 1, value: cur})
                     }
@@ -44,8 +46,8 @@ export class OneTwo {
     }
 
     private getNumberWorld(numberElement: string): string {
-        if (OneTwo.i18n.has(numberElement)) {
-            return OneTwo.i18n.get(numberElement);
+        if (OneTwo.i18nNumberToWorldMap.has(numberElement)) {
+            return OneTwo.i18nNumberToWorldMap.get(numberElement);
         } else {
             throw new Error(`unknown number ${numberElement}`)
         }
