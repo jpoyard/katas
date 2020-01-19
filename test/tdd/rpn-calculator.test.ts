@@ -8,7 +8,7 @@ describe('RPN Calculator', () => {
 
     beforeEach(() => {
         calculator = new RPNCalculator();
-    })
+    });
 
     describe('calculate()', () => {
         [
@@ -31,11 +31,11 @@ describe('RPN Calculator', () => {
                     // Given
 
                     // When
-                    const actual = calculator.calculate(scenario.given)
+                    const actual = calculator.calculate(scenario.given);
 
                     // Then
                     expect(actual).to.equal(scenario.then);
                 })
             })
     })
-})
+});

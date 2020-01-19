@@ -6,7 +6,7 @@ describe('FizzBuzz', () => {
 
     beforeEach(() => {
         fizzBuzz = new FizzBuzz();
-    })
+    });
 
     describe('play()', () => {
         [

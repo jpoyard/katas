@@ -23,17 +23,17 @@ export class OneTwo {
     public convertNumberToString(
         numberSequence: string
     ) {
-        const numberCounterArray = this.getNumberCountArray(numberSequence);
-        return numberCounterArray.map(item => this.convertEachNumber(item)).join(' ');
+        const numberCounterArray = OneTwo.getNumberCountArray(numberSequence);
+        return numberCounterArray.map(item => OneTwo.convertEachNumber(item)).join(' ');
     }
 
     public convertStringToNumber(worldSequence: string) {
         const worldSequenceArray = this.getWorldSequenceArray(worldSequence);
-        return worldSequenceArray.map(item => this.getNumberSequence(item)).join(' ');
+        return worldSequenceArray.map(item => OneTwo.getNumberSequence(item)).join(' ');
     }
 
-    getNumberCountArray(numberSequence: string) {
-        const numberCounterArray: NumberCounter[] = numberSequence
+    private static getNumberCountArray(numberSequence: string) {
+        return numberSequence
             .split(' ')
             .reduce<NumberCounter[]>(
                 (acc: NumberCounter[], cur: string) => {
@@ -47,14 +47,13 @@ export class OneTwo {
                     return acc;
                 }, []
             );
-        return numberCounterArray;
     }
 
-    convertEachNumber(numberCounter: NumberCounter): string {
-        return `${this.getNumberWorld(numberCounter.count.toString())} ${this.getNumberWorld(numberCounter.value)}`
+    private static convertEachNumber(numberCounter: NumberCounter): string {
+        return `${OneTwo.getNumberWorld(numberCounter.count.toString())} ${OneTwo.getNumberWorld(numberCounter.value)}`
     }
 
-    getNumberWorld(numberElement: string): string {
+    private static getNumberWorld(numberElement: string): string {
         if (OneTwo.i18nNumberToWorldMap.has(numberElement)) {
             return OneTwo.i18nNumberToWorldMap.get(numberElement);
         } else {
@@ -67,8 +66,8 @@ export class OneTwo {
             (acc, cur, i) => {
                 if (i % 2 === 0) {
                     const count = Number.parseInt(
-                        this.getNumberFromWorld(cur), 10
-                    )
+                        OneTwo.getNumberFromWorld(cur), 10
+                    );
                     acc.push({count, value: ''})
                 } else {
                     acc[acc.length - 1].value = cur
@@ -78,7 +77,7 @@ export class OneTwo {
         );
     }
 
-    private getNumberFromWorld(world: string): string {
+    private static getNumberFromWorld(world: string): string {
         if (OneTwo.i18nWorldToNumberMap.has(world)) {
             return OneTwo.i18nWorldToNumberMap.get(world);
         } else {
@@ -86,10 +85,9 @@ export class OneTwo {
         }
     }
 
-    private getNumberSequence(numberCounter: NumberCounter): string {
-        const value = this.getNumberFromWorld(numberCounter.value);
-        let result = new Array(numberCounter.count).fill(value).join(' ');
-        return result;
+    private static getNumberSequence(numberCounter: NumberCounter): string {
+        const value = OneTwo.getNumberFromWorld(numberCounter.value);
+        return new Array(numberCounter.count).fill(value).join(' ');
     }
 
 }
