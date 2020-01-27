@@ -1,10 +1,11 @@
-import {FizzBuzzElement} from './fizz-buzz/fizz-buzz.component';
+import {FizzBuzzElement} from './fizz-buzz';
 import './style.css';
 import {RpnCalculatorElement} from "./rpn-calculator";
+import {MinesWeeperElement} from "./minesweeper";
 
 const PACKAGE = require('./../../package.json');
 
-const ELEMENTS = [FizzBuzzElement, RpnCalculatorElement];
+const ELEMENTS = [MinesWeeperElement, FizzBuzzElement, RpnCalculatorElement];
 
 function getName(constructor: Function) {
     return constructor.name
@@ -17,6 +18,10 @@ export const defineElements: () => void = () => {
         const name = getName(constructor);
         customElements.define(name, constructor);
     })
+};
+
+function insertElement(bodyElement: HTMLElement, name: string) {
+    bodyElement.innerHTML = `<${name} style="display: flex; flex: 1 1 auto"></${name}>`
 }
 
 function createHeader(bodyElement: HTMLElement): HTMLElement {
@@ -28,13 +33,9 @@ function createHeader(bodyElement: HTMLElement): HTMLElement {
         const name = getName(constructor);
         const button = document.createElement('button');
         button.textContent = name;
-        button.onclick = () => {
-            bodyElement.innerHTML = `<${name} style="display: flex; flex: 1 1 auto"></${name}>`
-        }
-
-
+        button.onclick = () => insertElement(bodyElement, name);
         headerElement.appendChild(button);
-    })
+    });
     return headerElement;
 }
 
@@ -59,11 +60,13 @@ export const createElement: () => HTMLElement = () => {
     mainElement.style.justifyContent = 'space-between';
 
     const body = createBody();
+    insertElement(body, getName(ELEMENTS[0]));
+
     mainElement.appendChild(createHeader(body));
     mainElement.appendChild(body);
     mainElement.appendChild(createFooter());
 
     return mainElement;
-}
+};
 
 

@@ -1,45 +1,35 @@
 class Field {
     public outputLines: string[][];
-    private inputLines: string[][];
+    private readonly inputLines: string[][];
 
     constructor(private numberOfLines: number, private numberOfColumns: number, inputLines: string[]) {
         this.inputLines = inputLines.map(line => line.split(''));
         this.outputLines = this.inputLines.map(
             (line, lineIndex) =>
-                line.map((column, columnIndex) => {
-                        if (this.isMine(lineIndex, columnIndex)) {
-                            return column;
-                        } else if (column === '.') {
-                            let counter = 0;
-                            if (this.isMineForPosition1(lineIndex, columnIndex)) {
-                                counter++;
-                            }
-                            if (this.isMineForPosition2(lineIndex, columnIndex)) {
-                                counter++;
-                            }
-                            if (this.isMineForPosition3(lineIndex, columnIndex)) {
-                                counter++;
-                            }
-                            if (this.isMineForPosition4(lineIndex, columnIndex)) {
-                                counter++;
-                            }
-                            if (this.isMineForPosition5(lineIndex, columnIndex)) {
-                                counter++;
-                            }
-                            if (this.isMineForPosition6(lineIndex, columnIndex)) {
-                                counter++;
-                            }
-                            if (this.isMineForPosition7(lineIndex, columnIndex)) {
-                                counter++;
-                            }
-                            if (this.isMineForPosition8(lineIndex, columnIndex)) {
-                                counter++;
-                            }
-                            return counter.toString()
-                        }
-                    }
-                )
+                this.updateLine(line, lineIndex)
         );
+    }
+
+    private updateLine(line: string[], lineIndex: number) {
+        return line.map((column, columnIndex) => {
+                if (this.isMine(lineIndex, columnIndex)) {
+                    return column;
+                } else if (column === '.') {
+                    return this.getNumberOfMines(lineIndex, columnIndex).toString();
+                }
+            }
+        );
+    }
+
+    private getNumberOfMines(lineIndex: number, columnIndex: number): number {
+        return new Array(8).fill(0).map((_v, i) => {
+            return this[`isMineForPosition${i + 1}`](lineIndex, columnIndex)
+        }).reduce((acc, cur) => {
+            if (cur) {
+                acc++
+            }
+            return acc
+        }, 0);
     }
 
     private isMine(lineIndex: number, columnPosition: number) {
