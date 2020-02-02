@@ -1,10 +1,9 @@
-import {FizzBuzzElement} from './fizz-buzz/fizz-buzz.component';
+import {FizzBuzzElement} from './fizz-buzz';
 import './style.css';
-import {RpnCalculatorElement} from "./rpn-calculator";
 
 const PACKAGE = require('./../../package.json');
 
-const ELEMENTS = [FizzBuzzElement, RpnCalculatorElement];
+const ELEMENTS = [FizzBuzzElement];
 
 function getName(constructor: Function) {
     return constructor.name
@@ -17,7 +16,7 @@ export const defineElements: () => void = () => {
         const name = getName(constructor);
         customElements.define(name, constructor);
     })
-}
+};
 
 function createHeader(bodyElement: HTMLElement): HTMLElement {
     const headerElement = document.createElement('header');
@@ -30,24 +29,26 @@ function createHeader(bodyElement: HTMLElement): HTMLElement {
         button.textContent = name;
         button.onclick = () => {
             bodyElement.innerHTML = `<${name} style="display: flex; flex: 1 1 auto"></${name}>`
-        }
-
+        };
 
         headerElement.appendChild(button);
-    })
+    });
     return headerElement;
 }
 
 function createFooter(): HTMLElement {
-    const footerElememnt = document.createElement('footer');
-    footerElememnt.textContent = `version ${PACKAGE.version}`;
-    return footerElememnt;
+    const footerElement = document.createElement('footer');
+    footerElement.textContent = `version ${PACKAGE.version}`;
+    return footerElement;
 }
 
 function createBody(): HTMLElement {
     const bodyElement = document.createElement('div');
     bodyElement.style.flex = "1 1 auto";
     bodyElement.style.display = "flex";
+    if(ELEMENTS.length>0){
+        const name = getName(ELEMENTS[0]);
+        bodyElement.innerHTML = `<${name} style="display: flex; flex: 1 1 auto"></${name}>`;    }
     return bodyElement;
 }
 
@@ -64,6 +65,7 @@ export const createElement: () => HTMLElement = () => {
     mainElement.appendChild(createFooter());
 
     return mainElement;
-}
+};
+
 
 
