@@ -2,20 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="847ee973-2ee5-4b36-ad64-88ad4e7611b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/app/fizz-buzz/fizz-buzz.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/fizz-buzz/fizz-buzz.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/fizz-buzz/fizz-buzz.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/fizz-buzz/service/fizz-buzz.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/fizz-buzz/fizz-buzz.component.style.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/fizz-buzz/fizz-buzz.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/fizz-buzz/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/fizz-buzz/service/fizz-buzz.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/rpn-calculator/array-operation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/rpn-calculator/service/array-operation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/rpn-calculator/binary-operation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/rpn-calculator/service/binary-operation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/rpn-calculator/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/rpn-calculator/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/rpn-calculator/operation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/rpn-calculator/service/operation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/rpn-calculator/rpn-calculator.component.style.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/rpn-calculator/rpn-calculator.component.style.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/rpn-calculator/rpn-calculator.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/rpn-calculator/rpn-calculator.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/rpn-calculator/rpn-calculator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/rpn-calculator/service/rpn-calculator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/rpn-calculator/unary-operation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/rpn-calculator/service/unary-operation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/bdd/step_definitions/fizz-buzz.steps.ts" beforeDir="false" afterPath="$PROJECT_DIR$/test/bdd/step_definitions/fizz-buzz.steps.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/tdd/fizz-buzz.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/test/tdd/fizz-buzz.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/tdd/rpn-calculator.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/test/tdd/rpn-calculator.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/bdd/features/fizz-buzz.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/bdd/step_definitions/fizz-buzz.steps.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/tdd/fizz-buzz.test.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
