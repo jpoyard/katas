@@ -1,14 +1,12 @@
 import {STYLE} from "./labyrinth.component.style";
 
 export class LabyrinthGameElement extends HTMLElement {
-    private readonly PRIMARY_COLOR = "#ff7013";
+    private readonly PRIMARY_COLOR = "#ff631f";
     private readonly FONT = '20px serif';
     private shadow: ShadowRoot;
     private canvas: HTMLCanvasElement;
     private canvasCtx: CanvasRenderingContext2D;
-    private gridSize: number;
-    private height: number;
-    private width: number;
+    private size: { width: number, height: number } = {width: 1, height: 1};
     private roomSize: number;
 
     constructor() {
@@ -41,11 +39,8 @@ export class LabyrinthGameElement extends HTMLElement {
         this.canvas.height = 0;
         setTimeout(
             () => {
-                console.info(this.canvas.offsetWidth, this.canvas.offsetHeight);
-                this.gridSize = 10;
-                this.roomSize = this.canvas.offsetWidth > this.canvas.offsetHeight ? this.canvas.offsetHeight : this.canvas.offsetWidth;
-                this.height = this.roomSize / this.gridSize;
-                this.width = this.roomSize / this.gridSize;
+                this.roomSize = (this.canvas.offsetWidth / this.size.width > this.canvas.offsetHeight / this.size.height) ?
+                    this.canvas.offsetHeight / this.size.height : this.canvas.offsetWidth / this.size.width;
                 this.canvas.width = this.canvas.offsetWidth;
                 this.canvas.height = this.canvas.offsetHeight;
                 this.draw();
@@ -67,11 +62,11 @@ export class LabyrinthGameElement extends HTMLElement {
     private drawHLines() {
         this.canvasCtx.strokeStyle = this.PRIMARY_COLOR;
         this.canvasCtx.lineWidth = 0.55;
-        for (let j = 0; j <= this.gridSize; j++) {
+        for (let j = 0; j <= this.size.height; j++) {
             const x = 0;
-            const y = (j) * this.height;
+            const y = (j) * this.roomSize;
             this.canvasCtx.moveTo(x, y);
-            this.canvasCtx.lineTo(this.width * this.gridSize, y);
+            this.canvasCtx.lineTo(this.roomSize * this.size.width, y);
         }
         this.canvasCtx.stroke();
     }
@@ -79,9 +74,9 @@ export class LabyrinthGameElement extends HTMLElement {
     private drawVLines() {
         this.canvasCtx.strokeStyle = this.PRIMARY_COLOR;
         this.canvasCtx.lineWidth = 0.55;
-        for (let i = 0; i <= this.gridSize; i++) {
-            const x = i * this.width;
-            const y = this.height * this.gridSize;
+        for (let i = 0; i <= this.size.width; i++) {
+            const x = i * this.roomSize;
+            const y = this.roomSize * this.size.height;
             this.canvasCtx.moveTo(x, 0);
             this.canvasCtx.lineTo(x, y);
         }
@@ -91,14 +86,14 @@ export class LabyrinthGameElement extends HTMLElement {
     private writePosition() {
         this.canvasCtx.fillStyle = this.PRIMARY_COLOR;
         this.canvasCtx.font = this.FONT;
-        for (let y = 0; y < this.gridSize; y++) {
-            for (let x = 0; x < this.gridSize; x++) {
-                const displayedValue = `${y * this.gridSize + x}`;
+        for (let y = 0; y < this.size.height; y++) {
+            for (let x = 0; x < this.size.width; x++) {
+                const displayedValue = `${y * this.size.width + x}`;
                 const measureText = (this.canvasCtx.measureText(displayedValue));
                 const textSize = {width: measureText.width, height: measureText.actualBoundingBoxAscent};
-                const xPosition = (this.width - textSize.width) / 2;
-                const yPosition = this.height - (this.height - textSize.height) / 2;
-                this.canvasCtx.fillText(displayedValue, xPosition + this.width * (x), yPosition + this.height * (y));
+                const xPosition = (this.roomSize - textSize.width) / 2;
+                const yPosition = this.roomSize - (this.roomSize - textSize.height) / 2;
+                this.canvasCtx.fillText(displayedValue, xPosition + this.roomSize * (x), yPosition + this.roomSize * (y));
             }
         }
     }
