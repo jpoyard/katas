@@ -11,15 +11,26 @@ export interface Room {
 }
 
 export class Labyrinth {
-    private rooms: Room[];
-    private readonly length : number;
+    public rooms: Room[];
+    private readonly _length : number;
+
+    public get length(): number {
+        return this._length;
+    }
 
     constructor(private size: { width: number, height: number }) {
-        this.length = this.size.width * this.size.height;
+        this._length = this.size.width * this.size.height;
+    }
+
+    public get width(): number{
+        return this.size.width;
+    }
+    public get height(): number{
+        return this.size.height;
     }
 
     initialize(): Room[] {
-        this.rooms = new Array(this.length).fill({}).map(
+        this.rooms = new Array(this._length).fill({}).map(
             (_v, index)=>({
                     North: this.getNorth(index),
                     South: this.getSouth(index),
@@ -31,7 +42,6 @@ export class Labyrinth {
     }
 
     private getWest(index: number):TypeEnum {
-        debugger
         if (index % this.size.width === 0) {
             return TypeEnum.Wall;
         } else {
@@ -48,7 +58,7 @@ export class Labyrinth {
     }
 
     private getSouth(index: number):TypeEnum {
-        if (index + this.size.width >= this.length) {
+        if (index + this.size.width >= this._length) {
             return TypeEnum.Wall;
         } else {
             return TypeEnum.Door;

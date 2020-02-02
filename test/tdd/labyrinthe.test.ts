@@ -14,6 +14,40 @@ describe(Labyrinth.name, () => {
                         {North: TypeEnum.Wall, South: TypeEnum.Wall, East: TypeEnum.Door, West: TypeEnum.Wall},
                         {North: TypeEnum.Wall, South: TypeEnum.Wall, East: TypeEnum.Wall, West: TypeEnum.Door}
                     ]
+            },
+            {
+                given: {size: {width: 2, height: 2}}, then:
+                    [
+                        {North: TypeEnum.Wall, South: TypeEnum.Door, East: TypeEnum.Door, West: TypeEnum.Wall},
+                        {North: TypeEnum.Wall, South: TypeEnum.Door, East: TypeEnum.Wall, West: TypeEnum.Door},
+                        {North: TypeEnum.Door, South: TypeEnum.Wall, East: TypeEnum.Door, West: TypeEnum.Wall},
+                        {North: TypeEnum.Door, South: TypeEnum.Wall, East: TypeEnum.Wall, West: TypeEnum.Door}
+                    ]
+            },
+            {
+                given: {size: {width: 3, height: 2}}, then:
+                    [
+                        {North: TypeEnum.Wall, South: TypeEnum.Door, East: TypeEnum.Door, West: TypeEnum.Wall},
+                        {North: TypeEnum.Wall, South: TypeEnum.Door, East: TypeEnum.Door, West: TypeEnum.Door},
+                        {North: TypeEnum.Wall, South: TypeEnum.Door, East: TypeEnum.Wall, West: TypeEnum.Door},
+                        {North: TypeEnum.Door, South: TypeEnum.Wall, East: TypeEnum.Door, West: TypeEnum.Wall},
+                        {North: TypeEnum.Door, South: TypeEnum.Wall, East: TypeEnum.Door, West: TypeEnum.Door},
+                        {North: TypeEnum.Door, South: TypeEnum.Wall, East: TypeEnum.Wall, West: TypeEnum.Door}
+                    ]
+            },
+            {
+                given: {size: {width: 3, height: 3}}, then:
+                    [
+                        {North: TypeEnum.Wall, South: TypeEnum.Door, East: TypeEnum.Door, West: TypeEnum.Wall},
+                        {North: TypeEnum.Wall, South: TypeEnum.Door, East: TypeEnum.Door, West: TypeEnum.Door},
+                        {North: TypeEnum.Wall, South: TypeEnum.Door, East: TypeEnum.Wall, West: TypeEnum.Door},
+                        {North: TypeEnum.Door, South: TypeEnum.Door, East: TypeEnum.Door, West: TypeEnum.Wall},
+                        {North: TypeEnum.Door, South: TypeEnum.Door, East: TypeEnum.Door, West: TypeEnum.Door},
+                        {North: TypeEnum.Door, South: TypeEnum.Door, East: TypeEnum.Wall, West: TypeEnum.Door},
+                        {North: TypeEnum.Door, South: TypeEnum.Wall, East: TypeEnum.Door, West: TypeEnum.Wall},
+                        {North: TypeEnum.Door, South: TypeEnum.Wall, East: TypeEnum.Door, West: TypeEnum.Door},
+                        {North: TypeEnum.Door, South: TypeEnum.Wall, East: TypeEnum.Wall, West: TypeEnum.Door}
+                    ]
             }
         ].forEach(scenario => {
             it(``, () => {
