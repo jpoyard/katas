@@ -19,16 +19,14 @@ export class Labyrinth {
     }
 
     initialize(): Room[] {
-        this.rooms = new Array(this.length);
-
-        const index = 0;
-        this.rooms[index] = {
-            North: this.getNorth(index),
-            South: this.getSouth(index),
-            East: this.getEast(index),
-            West: this.getWest(index)
-        };
-
+        this.rooms = new Array(this.length).fill({}).map(
+            (_v, index)=>({
+                    North: this.getNorth(index),
+                    South: this.getSouth(index),
+                    East: this.getEast(index),
+                    West: this.getWest(index)
+                })
+        );
         return this.rooms;
     }
 
