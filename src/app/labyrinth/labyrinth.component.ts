@@ -12,7 +12,7 @@ export class LabyrinthGameElement extends HTMLElement {
 
     constructor() {
         super();
-        this.labyrinth = new Labyrinth({width: 20, height: 15});
+        this.labyrinth = new Labyrinth({width: 2, height: 2}, 60);
         this.init();
         window.addEventListener('resize', () => this.resize());
         this.resize();
@@ -53,37 +53,11 @@ export class LabyrinthGameElement extends HTMLElement {
 
     private draw() {
         this.clear();
-        // this.drawHLines();
-        // this.drawVLines();
         this.writePosition();
     }
 
     private clear() {
         this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-
-    private drawHLines() {
-        this.canvasCtx.strokeStyle = this.PRIMARY_COLOR;
-        this.canvasCtx.lineWidth = 0.55;
-        for (let j = 0; j <= this.labyrinth.height; j++) {
-            const x = 0;
-            const y = (j) * this.roomSize;
-            this.canvasCtx.moveTo(x, y);
-            this.canvasCtx.lineTo(this.roomSize * this.labyrinth.width, y);
-        }
-        this.canvasCtx.stroke();
-    }
-
-    private drawVLines() {
-        this.canvasCtx.strokeStyle = this.PRIMARY_COLOR;
-        this.canvasCtx.lineWidth = 0.55;
-        for (let i = 0; i <= this.labyrinth.width; i++) {
-            const x = i * this.roomSize;
-            const y = this.roomSize * this.labyrinth.height;
-            this.canvasCtx.moveTo(x, 0);
-            this.canvasCtx.lineTo(x, y);
-        }
-        this.canvasCtx.stroke();
     }
 
     private writePosition() {
@@ -106,24 +80,24 @@ export class LabyrinthGameElement extends HTMLElement {
                 this.drawEastWall(x, y);
             }
 
-            const displayedValue = `${y * this.labyrinth.width + x}`;
-            const measureText = (this.canvasCtx.measureText(displayedValue));
-            const textSize = {width: measureText.width, height: measureText.actualBoundingBoxAscent};
-            const xPosition = (this.roomSize - textSize.width) / 2;
-            const yPosition = this.roomSize - (this.roomSize - textSize.height) / 2;
-            this.canvasCtx.fillText(displayedValue, xPosition + this.roomSize * (x), yPosition + this.roomSize * (y));
+            // const displayedValue = `${y * this.labyrinth.width + x}`;
+            // const measureText = (this.canvasCtx.measureText(displayedValue));
+            // const textSize = {width: measureText.width, height: measureText.actualBoundingBoxAscent};
+            // const xPosition = (this.roomSize - textSize.width) / 2;
+            // const yPosition = this.roomSize - (this.roomSize - textSize.height) / 2;
+            // this.canvasCtx.fillText(displayedValue, xPosition + this.roomSize * (x), yPosition + this.roomSize * (y));
         }
         this.canvasCtx.stroke();
     }
 
     private drawNorthWall(x: number, y: number) {
-        this.canvasCtx.moveTo(x*this.roomSize, (y)*this.roomSize);
-        this.canvasCtx.lineTo((x+1)*this.roomSize, (y)*this.roomSize);
+        this.canvasCtx.moveTo(x * this.roomSize, (y) * this.roomSize);
+        this.canvasCtx.lineTo((x + 1) * this.roomSize, (y) * this.roomSize);
     }
 
     private drawSouthWall(x: number, y: number) {
-        this.canvasCtx.moveTo(x*this.roomSize, (y+1)*this.roomSize);
-        this.canvasCtx.lineTo((x+1)*this.roomSize, (y+1)*this.roomSize);
+        this.canvasCtx.moveTo(x * this.roomSize, (y + 1) * this.roomSize);
+        this.canvasCtx.lineTo((x + 1) * this.roomSize, (y + 1) * this.roomSize);
     }
 
     private drawWestWall(x: number, y: number) {
@@ -132,7 +106,7 @@ export class LabyrinthGameElement extends HTMLElement {
     }
 
     private drawEastWall(x: number, y: number) {
-        this.canvasCtx.moveTo((x+1) * this.roomSize, y * this.roomSize);
-        this.canvasCtx.lineTo((x+1) * this.roomSize, (y + 1) * this.roomSize);
+        this.canvasCtx.moveTo((x + 1) * this.roomSize, y * this.roomSize);
+        this.canvasCtx.lineTo((x + 1) * this.roomSize, (y + 1) * this.roomSize);
     }
 }
