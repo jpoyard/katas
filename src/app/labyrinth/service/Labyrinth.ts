@@ -23,41 +23,28 @@ export class Labyrinth {
     private static readonly MAX = 100;
     public rooms: Room[];
     private readonly _length: number;
-    private readonly pathStrategies: Array<{ door: DirectionEnum, next: (path, position) => { path: Array<{ position: number, door: DirectionEnum }>, position: number } }>;
+    private readonly pathStrategies: Array<{ door: DirectionEnum, next: (position: number) => number }>;
 
     constructor(private size: { width: number, height: number }, private doorRandomLevel: number) {
         this._length = this.size.width * this.size.height;
         this.pathStrategies = [
             {
                 door: DirectionEnum.North,
-                next: (path, position) => ({
-                    path: [...path, {position, door: DirectionEnum.North}],
-                    position: position - this.size.width
-                })
+                next: (position) => position - this.size.width
             },
             {
                 door: DirectionEnum.East,
-                next: (path, position) => ({
-                    path: [...path, {position, door: DirectionEnum.East}],
-                    position: position + 1
-                })
+                next: (position) => position + 1
             },
             {
                 door: DirectionEnum.South,
-                next: (path, position) => ({
-                    path: [...path, {position, door: DirectionEnum.South}],
-                    position: position + this.size.width
-                })
+                next: (position) => position + this.size.width
             },
             {
                 door: DirectionEnum.West,
-                next: (path, position) => ({
-                    path: [...path, {position, door: DirectionEnum.West}],
-                    position: position - 1
-                })
+                next: (position) => position - 1
             }
         ];
-
     }
 
     public get length(): number {
@@ -70,6 +57,21 @@ export class Labyrinth {
 
     public get height(): number {
         return this.size.height;
+    }
+
+    private static getInDoor(door: DirectionEnum): DirectionEnum | null {
+        switch (door) {
+            case DirectionEnum.West:
+                return DirectionEnum.East;
+            case DirectionEnum.East:
+                return DirectionEnum.West;
+            case DirectionEnum.South:
+                return DirectionEnum.North;
+            case DirectionEnum.North:
+                return DirectionEnum.South;
+            default:
+                return null;
+        }
     }
 
     initialize(): Room[] {
@@ -91,46 +93,28 @@ export class Labyrinth {
     }
 
     findPath(start: number, end: number): number[] {
-        let path: Array<{ position: number, door: DirectionEnum }> = [];
-        let position = start;
-        let door = DirectionEnum.North;
+        // init
+        const possiblePaths = this.rooms.map(
+            room => Object.values(DirectionEnum)
+                .map(direction => ({direction, type: room[direction]}))
+                .filter(possiblePath => possiblePath.type === TypeEnum.Door)
+                .map(possiblePaths => possiblePaths.direction)
+        );
+        const path: number[] = [start];
         do {
-            const next = this.getNextPosition(start, position, path, door);
-            if (next) {
-                position = next.position;
-                path = next.path;
-                door = DirectionEnum.North;
-            } else if (path.length > 0) {
-                const previous = path.pop();
-                position = previous.position;
-                door = previous.door;
+            const position = path[path.length - 1];
+            if (possiblePaths[position].length > 0) {
+                const door = possiblePaths[position].pop();
+                const strategy = this.pathStrategies.find(strategy => strategy.door === door);
+                const next = strategy.next(position);
+                const indoor = Labyrinth.getInDoor(door);
+                possiblePaths[next] = possiblePaths[next].filter(direction => direction !== indoor);
+                path.push(next);
+            } else {
+                path.pop();
             }
-        } while (position !== start && position !== end && path.length > 0);
-        if (position === end) {
-            return [...path.map(i => i.position), position];
-        } else {
-            return []
-        }
-    }
-
-    private getNextPosition(start: number, position: number, path: Array<{ position: number; door: DirectionEnum }>, door: DirectionEnum) {
-        const possibleStrategies = this.pathStrategies
-            .reduce((acc, strategy) => {
-                if (strategy.door === door || acc.length > 0) {
-                    return [...acc, strategy]
-                } else {
-                    return acc
-                }
-            }, [])
-            .filter(strategy => this.rooms[position][strategy.door] === TypeEnum.Door)
-            .filter(strategy => strategy.next(path, position).position !== start);
-
-        if (possibleStrategies.length > 0) {
-            return possibleStrategies[0].next(path, position);
-        } else {
-            return null;
-        }
-
+        } while (path.length > 0 && path[path.length - 1] !== end);
+        return path;
     }
 
     private getWest(index: number): TypeEnum {

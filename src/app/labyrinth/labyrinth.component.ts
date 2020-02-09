@@ -2,7 +2,9 @@ import {STYLE} from "./labyrinth.component.style";
 import {Labyrinth, TypeEnum} from "./service/Labyrinth";
 
 export class LabyrinthGameElement extends HTMLElement {
-    private readonly PRIMARY_COLOR = "#ff631f";
+    private readonly TEXT_COLOR = "#000"; //"#ff631f";
+    private readonly WALL_COLOR = "#7d7d7d";
+    private readonly PATH_COLOR = "#7d0609";
     private readonly FONT = '20px serif';
     private shadow: ShadowRoot;
     private canvas: HTMLCanvasElement;
@@ -12,7 +14,7 @@ export class LabyrinthGameElement extends HTMLElement {
 
     constructor() {
         super();
-        this.labyrinth = new Labyrinth({width: 2, height: 2}, 60);
+        this.labyrinth = new Labyrinth({width: 40, height: 30}, 60);
         this.init();
         window.addEventListener('resize', () => this.resize());
         this.resize();
@@ -53,16 +55,17 @@ export class LabyrinthGameElement extends HTMLElement {
 
     private draw() {
         this.clear();
-        this.writePosition();
+        this.drawLabyrinth();
+        this.drawPath();
     }
 
     private clear() {
         this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    private writePosition() {
-        this.canvasCtx.fillStyle = this.PRIMARY_COLOR;
-        this.canvasCtx.font = this.FONT;
+    private drawLabyrinth() {
+        this.canvasCtx.strokeStyle = this.WALL_COLOR;
+        this.canvasCtx.lineWidth = 4;
         for (let i = 0; i < this.labyrinth.length; i++) {
             const x = i % this.labyrinth.width;
             const y = Math.floor(i / this.labyrinth.width);
@@ -79,15 +82,21 @@ export class LabyrinthGameElement extends HTMLElement {
             if (this.labyrinth.rooms[i].East === TypeEnum.Wall) {
                 this.drawEastWall(x, y);
             }
-
-            // const displayedValue = `${y * this.labyrinth.width + x}`;
-            // const measureText = (this.canvasCtx.measureText(displayedValue));
-            // const textSize = {width: measureText.width, height: measureText.actualBoundingBoxAscent};
-            // const xPosition = (this.roomSize - textSize.width) / 2;
-            // const yPosition = this.roomSize - (this.roomSize - textSize.height) / 2;
-            // this.canvasCtx.fillText(displayedValue, xPosition + this.roomSize * (x), yPosition + this.roomSize * (y));
+            this.writePosition(y, x);
         }
+
         this.canvasCtx.stroke();
+    }
+
+    private writePosition(y: number, x: number) {
+        this.canvasCtx.fillStyle = this.TEXT_COLOR;
+        this.canvasCtx.font = this.FONT;
+        const displayedValue = `${y * this.labyrinth.width + x}`;
+        const measureText = (this.canvasCtx.measureText(displayedValue));
+        const textSize = {width: measureText.width, height: measureText.actualBoundingBoxAscent};
+        const xPosition = (this.roomSize - textSize.width) / 2;
+        const yPosition = this.roomSize - (this.roomSize - textSize.height) / 2;
+        this.canvasCtx.fillText(displayedValue, xPosition + this.roomSize * (x), yPosition + this.roomSize * (y));
     }
 
     private drawNorthWall(x: number, y: number) {
@@ -108,5 +117,22 @@ export class LabyrinthGameElement extends HTMLElement {
     private drawEastWall(x: number, y: number) {
         this.canvasCtx.moveTo((x + 1) * this.roomSize, y * this.roomSize);
         this.canvasCtx.lineTo((x + 1) * this.roomSize, (y + 1) * this.roomSize);
+    }
+
+    private drawPath() {
+        const path = this.labyrinth.findPath(0, (this.labyrinth.width * this.labyrinth.height) - 1);
+        console.info(path && path.length > 0 ? path : null);
+        if (path) {
+            this.canvasCtx.strokeStyle = this.PATH_COLOR;
+            this.canvasCtx.lineWidth = 5;
+            this.canvasCtx.beginPath();
+            this.canvasCtx.moveTo(0, 0);
+            path.forEach((position) => {
+                const x = position % this.labyrinth.width;
+                const y = (position - x) / this.labyrinth.width;
+                this.canvasCtx.lineTo(x * this.roomSize + this.roomSize / 2, y * this.roomSize + this.roomSize / 2);
+            });
+            this.canvasCtx.stroke();
+        }
     }
 }
