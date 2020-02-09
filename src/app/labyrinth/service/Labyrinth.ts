@@ -95,7 +95,7 @@ export class Labyrinth {
         let position = start;
         let door = DirectionEnum.North;
         do {
-            const next = this.getNextPosition(position, path, door);
+            const next = this.getNextPosition(start, position, path, door);
             if (next) {
                 position = next.position;
                 path = next.path;
@@ -113,7 +113,7 @@ export class Labyrinth {
         }
     }
 
-    private getNextPosition(position: number, path: Array<{ position: number; door: DirectionEnum }>, door: DirectionEnum) {
+    private getNextPosition(start: number, position: number, path: Array<{ position: number; door: DirectionEnum }>, door: DirectionEnum) {
         const possibleStrategies = this.pathStrategies
             .reduce((acc, strategy) => {
                 if (strategy.door === door || acc.length > 0) {
@@ -122,7 +122,8 @@ export class Labyrinth {
                     return acc
                 }
             }, [])
-            .filter(strategy => this.rooms[position][strategy.door] === TypeEnum.Door);
+            .filter(strategy => this.rooms[position][strategy.door] === TypeEnum.Door)
+            .filter(strategy => strategy.next(path, position).position !== start);
 
         if (possibleStrategies.length > 0) {
             return possibleStrategies[0].next(path, position);
