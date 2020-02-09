@@ -93,9 +93,13 @@ export class Labyrinth {
     }
 
     findPath(start: number, end: number): number[] {
+        let directions = Object.values(DirectionEnum);
+        if (start < end) {
+            directions = directions.reverse();
+        }
         // init
         const possiblePaths = this.rooms.map(
-            room => Object.values(DirectionEnum)
+            room => directions
                 .map(direction => ({direction, type: room[direction]}))
                 .filter(possiblePath => possiblePath.type === TypeEnum.Door)
                 .map(possiblePaths => possiblePaths.direction)
@@ -109,6 +113,11 @@ export class Labyrinth {
                 const next = strategy.next(position);
                 const indoor = Labyrinth.getInDoor(door);
                 possiblePaths[next] = possiblePaths[next].filter(direction => direction !== indoor);
+                const previous = path[path.length - 1];
+                const previousPosition = path.indexOf(previous);
+                if (previousPosition !== path.length - 1) {
+                    path.splice(previousPosition, (path.length - 1) - previousPosition);
+                }
                 path.push(next);
             } else {
                 path.pop();
