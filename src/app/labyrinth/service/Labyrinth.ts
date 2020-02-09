@@ -94,9 +94,6 @@ export class Labyrinth {
 
     findPath(start: number, end: number): number[] {
         let directions = Object.values(DirectionEnum);
-        if (start < end) {
-            directions = directions.reverse();
-        }
         // init
         const possiblePaths = this.rooms.map(
             room => directions
@@ -106,11 +103,11 @@ export class Labyrinth {
         );
         const path: number[] = [start];
         do {
-            const position = path[path.length - 1];
-            if (possiblePaths[position].length > 0) {
-                const door = possiblePaths[position].pop();
+            const cursor = path[path.length - 1];
+            if (possiblePaths[cursor].length > 0) {
+                const door = possiblePaths[cursor].pop();
                 const strategy = this.pathStrategies.find(strategy => strategy.door === door);
-                const next = strategy.next(position);
+                const next = strategy.next(cursor);
                 const indoor = Labyrinth.getInDoor(door);
                 possiblePaths[next] = possiblePaths[next].filter(direction => direction !== indoor);
                 const previous = path[path.length - 1];

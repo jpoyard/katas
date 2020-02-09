@@ -116,14 +116,14 @@ describe(Labyrinth.name, () => {
             {given: {size: {width: 2, height: 1}, doorRandomLevel: 100}, when: {start: 1, end: 0}, then: [1, 0]},
             {given: {size: {width: 1, height: 2}, doorRandomLevel: 100}, when: {start: 0, end: 1}, then: [0, 1]},
             {given: {size: {width: 1, height: 2}, doorRandomLevel: 100}, when: {start: 1, end: 0}, then: [1, 0]},
-            {given: {size: {width: 2, height: 2}, doorRandomLevel: 100}, when: {start: 0, end: 3}, then: [0, 1, 3]},
+            {given: {size: {width: 2, height: 2}, doorRandomLevel: 100}, when: {start: 0, end: 3}, then: [0, 2, 3]},
             {given: {size: {width: 2, height: 2}, doorRandomLevel: 100}, when: {start: 3, end: 0}, then: [3, 2, 0]},
-            {given: {size: {width: 2, height: 2}, doorRandomLevel: 100}, when: {start: 1, end: 2}, then: [1, 3, 2]},
+            {given: {size: {width: 2, height: 2}, doorRandomLevel: 100}, when: {start: 1, end: 2}, then: [1, 0, 2]},
             {given: {size: {width: 2, height: 2}, doorRandomLevel: 100}, when: {start: 2, end: 1}, then: [2, 3, 1]},
             {
                 given: {size: {width: 3, height: 3}, doorRandomLevel: 100},
                 when: {start: 0, end: 8},
-                then: [0, 1, 2, 5, 8]
+                then: [0, 3, 6, 7, 8]
             },
         ].forEach((scenario) => {
             it(`should return expected path when given=${JSON.stringify((scenario.given))}`, () => {
