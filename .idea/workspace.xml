@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="847ee973-2ee5-4b36-ad64-88ad4e7611b9" name="Default Changelist" comment="Init gilded-rose kata">
-      <change afterPath="$PROJECT_DIR$/test/tdd/gilded-rose.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/gilded-rose/service/gilded-rose.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/gilded-rose/service/gilded-rose.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/tdd/gilded-rose.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/test/tdd/gilded-rose.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,8 +45,8 @@
     <property name="nodejs.protractor.protractor_package" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="D:\utilisateurs\jpoyard\workspace\katas\node_modules\typescript\lib" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
+    <property name="ts.external.directory.path" value="C:\Users\jpoyard\workspace\katas\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -67,7 +68,7 @@
       <recent name="D:\utilisateurs\jpoyard\workspace\fizzBuzz\src\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Mocha.mocha">
+  <component name="RunManager" selected="npm.stryker">
     <configuration name="Cucumber" type="cucumber.js" factoryName="Cucumber.js">
       <option name="myFilePath" value="$PROJECT_DIR$/test/bdd/features" />
       <option name="myNameFilter" value="" />
@@ -212,7 +213,7 @@
       <workItem from="1577910014550" duration="110000" />
       <workItem from="1578063559851" duration="4464000" />
       <workItem from="1591295491466" duration="4649000" />
-      <workItem from="1591300427750" duration="466000" />
+      <workItem from="1591300427750" duration="3747000" />
     </task>
     <task id="LOCAL-00001" summary="volumeCreditsFor">
       <created>1578048709432</created>
@@ -385,26 +386,82 @@
       <screen x="1680" y="16" width="1920" height="1040" />
     </state>
     <state x="2094" y="192" key="#com.intellij.execution.impl.EditConfigurationsDialog/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591298054598" />
-    <state width="1899" height="308" key="GridCell.Tab.0.bottom" timestamp="1591300902065">
+    <state width="949" height="172" key="GridCell.Tab.0.bottom" timestamp="1591304111399">
       <screen x="1680" y="16" width="1920" height="1040" />
     </state>
-    <state width="1899" height="308" key="GridCell.Tab.0.bottom/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591300902065" />
-    <state width="1899" height="308" key="GridCell.Tab.0.center" timestamp="1591300902065">
+    <state width="949" height="172" key="GridCell.Tab.0.bottom/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591304111399" />
+    <state width="949" height="172" key="GridCell.Tab.0.center" timestamp="1591304111398">
       <screen x="1680" y="16" width="1920" height="1040" />
     </state>
-    <state width="1899" height="308" key="GridCell.Tab.0.center/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591300902065" />
-    <state width="1899" height="308" key="GridCell.Tab.0.left" timestamp="1591300902065">
+    <state width="949" height="172" key="GridCell.Tab.0.center/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591304111398" />
+    <state width="949" height="172" key="GridCell.Tab.0.left" timestamp="1591304111398">
       <screen x="1680" y="16" width="1920" height="1040" />
     </state>
-    <state width="1899" height="308" key="GridCell.Tab.0.left/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591300902065" />
-    <state width="1899" height="308" key="GridCell.Tab.0.right" timestamp="1591300902065">
+    <state width="949" height="172" key="GridCell.Tab.0.left/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591304111398" />
+    <state width="949" height="172" key="GridCell.Tab.0.right" timestamp="1591304111398">
       <screen x="1680" y="16" width="1920" height="1040" />
     </state>
-    <state width="1899" height="308" key="GridCell.Tab.0.right/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591300902065" />
-    <state x="2141" y="179" key="SettingsEditor" timestamp="1591297790018">
+    <state width="949" height="172" key="GridCell.Tab.0.right/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591304111398" />
+    <state width="1899" height="326" key="GridCell.Tab.1.bottom" timestamp="1591302193812">
       <screen x="1680" y="16" width="1920" height="1040" />
     </state>
-    <state x="2141" y="179" key="SettingsEditor/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591297790018" />
+    <state width="1899" height="326" key="GridCell.Tab.1.bottom/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193812" />
+    <state width="1899" height="326" key="GridCell.Tab.1.center" timestamp="1591302193811">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.1.center/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193811" />
+    <state width="1899" height="326" key="GridCell.Tab.1.left" timestamp="1591302193811">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.1.left/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193811" />
+    <state width="1899" height="326" key="GridCell.Tab.1.right" timestamp="1591302193811">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.1.right/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193811" />
+    <state width="1899" height="326" key="GridCell.Tab.2.bottom" timestamp="1591302193812">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.2.bottom/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193812" />
+    <state width="1899" height="326" key="GridCell.Tab.2.center" timestamp="1591302193812">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.2.center/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193812" />
+    <state width="1899" height="326" key="GridCell.Tab.2.left" timestamp="1591302193812">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.2.left/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193812" />
+    <state width="1899" height="326" key="GridCell.Tab.2.right" timestamp="1591302193812">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.2.right/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193812" />
+    <state width="1899" height="326" key="GridCell.Tab.3.bottom" timestamp="1591302193813">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.3.bottom/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193813" />
+    <state width="1899" height="326" key="GridCell.Tab.3.center" timestamp="1591302193813">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.3.center/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193813" />
+    <state width="1899" height="326" key="GridCell.Tab.3.left" timestamp="1591302193813">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.3.left/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193813" />
+    <state width="1899" height="326" key="GridCell.Tab.3.right" timestamp="1591302193813">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="326" key="GridCell.Tab.3.right/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302193813" />
+    <state x="2141" y="179" key="SettingsEditor" timestamp="1591303672567">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state x="2141" y="179" key="SettingsEditor/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591303672567" />
+    <state x="2296" y="248" key="run.anything.popup" timestamp="1591304107654">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state x="2296" y="248" key="run.anything.popup/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591304107654" />
+    <state x="2303" y="241" width="672" height="678" key="search.everywhere.popup" timestamp="1591302279549">
+      <screen x="1680" y="16" width="1920" height="1040" />
+    </state>
+    <state x="2303" y="241" width="672" height="678" key="search.everywhere.popup/3600.0.1536.832/1680.16.1920.1040/0.0.1680.1010@1680.16.1920.1040" timestamp="1591302279549" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/katas$test_prn_calculator_test_ts.dat" NAME="test\prn-calculator.test.ts Coverage Results" MODIFIED="1577902671771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

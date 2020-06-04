@@ -26,7 +26,7 @@ describe(GildedRose.name, () => {
                 name: "+5 Dexterity Vest", sellIn: 0, quality: 20
             },
             then: {sellIn: -1, quality: 18}
-        },{
+        }, {
         given: {
             name: "Aged Brie", sellIn: 10, quality: 20
         },
@@ -46,6 +46,16 @@ describe(GildedRose.name, () => {
             name: "Aged Brie", sellIn: 10, quality: 50
         },
         then: {sellIn: 9, quality: 50}
+    }, {
+        given: {
+            name: "Aged Brie", sellIn: 1, quality: 48
+        },
+        then: {sellIn: 0, quality: 49}
+    }, {
+        given: {
+            name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 1, quality: 10
+        },
+        then: {sellIn: 0, quality: 13}
     }, {
         given: {
             name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 10
@@ -83,6 +93,11 @@ describe(GildedRose.name, () => {
         then: {sellIn: -2, quality: 8}
     }, {
         given: {
+            name: "+5 Dexterity Vest", sellIn: 1, quality: 10
+        },
+        then: {sellIn: 0, quality: 9}
+    }, {
+        given: {
             name: "Aged Brie", sellIn: -1, quality: 10
         },
         then: {sellIn: -2, quality: 12}
@@ -91,17 +106,17 @@ describe(GildedRose.name, () => {
             name: "Aged Brie", sellIn: -1, quality: 50
         },
         then: {sellIn: -2, quality: 50}
-    },{
+    }, {
         given: {
             name: "Backstage passes to a TAFKAL80ETC concert", sellIn: -1, quality: 10
         },
         then: {sellIn: -2, quality: 0}
-    },{
+    }, {
         given: {
             name: "Sulfuras, Hand of Ragnaros", sellIn: -1, quality: 0
         },
         then: {sellIn: -1, quality: 0}
-    },{
+    }, {
         given: {
             name: "Sulfuras, Hand of Ragnaros", sellIn: -2, quality: 1
         },
